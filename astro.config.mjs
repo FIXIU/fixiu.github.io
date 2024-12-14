@@ -1,8 +1,10 @@
 // @ts-check
 import { defineConfig } from 'astro/config';
 
+import tailwind from '@astrojs/tailwind';
+
 // https://astro.build/config
 export default defineConfig({
-    site: 'https://fixiu.github.io',
-    base: '/fixiu.github.io',
+  site: 'https://fixiu.github.io',
+  integrations: [tailwind()],
 });
