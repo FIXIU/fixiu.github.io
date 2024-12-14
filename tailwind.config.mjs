@@ -4,6 +4,7 @@ export default {
 	theme: {
 		fontFamily: {
 			'Montserrat': ['Montserrat', 'sans-serif'],
+			'DMSerif': ['"DM Serif Text"', 'serif'],
 		},
 		extend: {},
 	},
