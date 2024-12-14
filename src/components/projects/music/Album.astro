@@ -10,12 +10,13 @@ interface Props {
 }
 
 const { imagePath, altText, albumName, artistName, releaseDate} = Astro.props;
-const images = import.meta.glob<{ default: ImageMetadata }>('/src/assets/album_covers/*.{jpeg,jpg,png,gif}');
-if (!images[imagePath]) throw new Error(`"${imagePath}" does not exist in glob: "src/assets/album_covers/.{jpeg,jpg,png,gif}"`);
+// const images = import.meta.glob<{ default: ImageMetadata }>('/src/assets/album_covers/*.{jpeg,jpg,png,gif}');
+// if (!images[imagePath]) throw new Error(`"${imagePath}" does not exist in glob: "src/assets/album_covers/.{jpeg,jpg,png,gif}"`); FIXME
 ---
 
 <div class="flex flex-row h-[158px] w-[316px] mt-4 ml-4">
-    <Image class="w-1/2 h-full rounded-tl-2xl rounded-bl-2xl" src={images[imagePath]()} alt={altText}/>
+    <div class="w-1/2 h-full rounded-tl-2xl rounded-bl-2xl flex justify-center items-center bg-slate-400">placeholder</div>
+    <!-- <Image class="w-1/2 h-full rounded-tl-2xl rounded-bl-2xl" src={images[imagePath]()} alt={altText}/> FIXME -->
     <div class="flex flex-col justify-left items-left p-4 w-1/2 h-full rounded-tr-2xl rounded-br-2xl bg-slate-50/10">
         <h1 class="text-slate-50">{albumName}</h1>
         <h2 class="text-slate-300">{artistName}</h2>
