@@ -8,10 +8,10 @@
 		<meta name="generator" content={Astro.generator} />
 		<title>FIXIU</title>
 	</head>
-	<body>
-		<nav>
-			<a href="/" id="navButton"><div>Home</div></a>
-			<a href="/projects" id="navButton"><div>Projects</div></a>
+	<body class="bg-slate-950">
+		<nav class="flex flex-row justify-around items-center h-[7.5vh] bg-slate-50/10">
+			<a href="/" class="text-slate-50 font-Montserrat no-underline"><div>Home</div></a>
+			<a href="/projects" class="text-slate-50 font-Montserrat no-underline"><div>Projects</div></a>
 		</nav>
 		<slot />
 	</body>
@@ -19,15 +19,6 @@
 
 <style>
 	@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
-
-	:root {
-		--primary: #f5f5f5;
-		--secondary: #f5f5f5;
-		--tertiary: #f5f5f5;
-		--quaternary: #f5f5f5;
-		--quinary: #f5f5f5;
-		--semiforeground: #ffffff1f;
-	}
 
 	html {
 		scroll-behavior: smooth;
@@ -37,20 +28,5 @@
 		margin: 0;
 		width: 100%;
 		height: 100%;
-		background-color: black;
-	}
-
-	nav {
-		display: flex;
-		justify-content: space-around;
-		align-items: center;
-		height: 7.5vh;
-		background-color: var(--semiforeground);
-	}
-
-	#navButton {
-		text-decoration: none;
-		color: var(--primary);
-		font-family: 'Montserrat', sans-serif;
 	}
 </style>

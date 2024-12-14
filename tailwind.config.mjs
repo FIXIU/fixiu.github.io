@@ -3,8 +3,7 @@ export default {
 	content: ['./src/**/*.{astro,html,js,jsx,md,mdx,svelte,ts,tsx,vue}'],
 	theme: {
 		fontFamily: {
-			'Redaction': ['Redaction', 'sans-serif'],
-			'RedactionBold': ['Redaction Bold', 'sans-serif'],
+			'Montserrat': ['Montserrat', 'sans-serif'],
 		},
 		extend: {},
 	},

@@ -4,11 +4,20 @@ import Album from '../../components/projects/music/Album.astro';
 ---
 
 <Layout>
-	<Album 
+    <div class="flex flex-row w-full">
+        <Album 
         imagePath="/src/assets/album_covers/Wolf.jpg" 
         altText="Wolf album cover"
         albumName="Wolf"
         artistName="Tyler, The Creator" 
         releaseDate="April 2, 2013"
         />
+        <Album 
+        imagePath="/src/assets/album_covers/Wolf.jpg" 
+        altText="Wolf album cover"
+        albumName="Wolf"
+        artistName="Tyler, The Creator" 
+        releaseDate="April 2, 2013"
+        />
+    </div>
 </Layout>

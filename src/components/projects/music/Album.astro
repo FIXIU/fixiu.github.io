@@ -14,11 +14,13 @@ const images = import.meta.glob<{ default: ImageMetadata }>('/src/assets/album_c
 if (!images[imagePath]) throw new Error(`"${imagePath}" does not exist in glob: "src/assets/album_covers/.{jpeg,jpg,png,gif}"`);
 ---
 
-<div class="flex flex-row h-[316px] w-[632px]">
-    <Image class="w-1/2 h-full rounded-tl-2xl rounded-bl-2xl" src={images[imagePath]()} alt={altText}/>
-    <div class="flex flex-col justify-left items-left p-4 w-1/2 h-full rounded-tr-2xl rounded-br-2xl bg-white/10">
-        <h1 class="text-slate-50">{albumName}</h1>
-        <h2 class="text-slate-300">{artistName}</h2>
-        <p class="text-slate-400">{releaseDate}</p>
+<a href="#" class=" h-[158px] w-[316px] mt-4 ml-4">
+    <div class="flex flex-row h-[158px] w-[316px]">
+        <Image class="w-1/2 h-full rounded-tl-2xl rounded-bl-2xl" src={images[imagePath]()} alt={altText}/>
+        <div class="flex flex-col justify-left items-left p-4 w-1/2 h-full rounded-tr-2xl rounded-br-2xl bg-slate-50/10">
+            <h1 class="text-slate-50">{albumName}</h1>
+            <h2 class="text-slate-300">{artistName}</h2>
+            <p class="text-slate-400">{releaseDate}</p>
+        </div>
     </div>
-</div>
+</a>
