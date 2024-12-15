@@ -4,14 +4,14 @@ import { Image } from 'astro:assets';
 const { imageSrc, albumName, artistName, releaseDate, rating} = Astro.props;
 ---
 
-<div class="flex flex-row h-[200px] w-[400px] m-2 grow max-w-[600px]">
+<div class="flex flex-row h-[200px] w-[400px] m-2 grow max-w-[600px] font-Montserrat">
     <Image class="w-1/2 h-full rounded-tl-2xl rounded-bl-2xl w-[200px]" src={imageSrc} alt={albumName} width="600" height="600" decoding="async" loading="lazy"/>
     <div class="flex flex-col justify-left items-left p-4 w-1/2 h-full rounded-tr-2xl rounded-br-2xl bg-zinc-50/10 grow">
-        <h1 class="text-zinc-50">{albumName}</h1>
-        <h2 class="text-zinc-300">{artistName}</h2>
+        <h1 class="text-zinc-50 font-semibold">{albumName}</h1>
+        <h2 class="text-zinc-300 font-medium">{artistName}</h2>
         <p class="text-zinc-400">{releaseDate}</p>
         <div class="flex-grow flex justify-center items-center">
-            <p class="text-zinc-100 text-4xl">{rating}/10</p>
+            <p class="text-zinc-100 text-5xl font-semibold">{rating}/10</p>
         </div>
         
     </div>

@@ -4,42 +4,45 @@ import Album from '../../components/projects/music/Album.astro';
 ---
 
 <Layout>
-    <div class="flex flex-row w-full justify-around p-2 flex-wrap">
-        <Album 
-        imageSrc="https://is1-ssl.mzstatic.com/image/thumb/Music116/v4/41/36/cb/4136cbae-f6aa-b1fc-5452-6f5e153f28a4/886443853874.jpg/600x600bb.jpg"
-        albumName="Wolf"
-        artistName="Tyler, The Creator" 
-        releaseDate="April 2, 2013"
-        rating={10}
-        />
-        <Album 
-        imageSrc="https://is1-ssl.mzstatic.com/image/thumb/Music122/v4/ca/5b/c0/ca5bc0b3-d81d-cc6c-0d19-54b9eedb6dbd/12UMGIM52990.rgb.jpg/600x600bb.jpg"
-        albumName="good kid, m.A.A.d city"
-        artistName="Kendrick Lamar" 
-        releaseDate="October 22, 2012"
-        rating={10}
-        />
-        <Album 
-        imageSrc="https://is1-ssl.mzstatic.com/image/thumb/Music221/v4/7d/bd/e9/7dbde97e-b97d-8cc3-0203-218b687408a9/196872555059.jpg/600x600bb.jpg" 
-        albumName="Chromakopia"
-        artistName="Tyler, The Creator" 
-        releaseDate="October 28, 2024"
-        rating={9}
-        />
-        <Album 
-        imageSrc="https://is1-ssl.mzstatic.com/image/thumb/Music125/v4/fd/fd/8c/fdfd8c26-b8f9-4768-41d3-b24773250c65/886446605814.jpg/600x600bb.jpg" 
-        albumName="Flower Boy"
-        artistName="Tyler, The Creator" 
-        releaseDate="July 21, 2017"
-        rating={8}
-        />
-        <Album 
-        imageSrc="https://is1-ssl.mzstatic.com/image/thumb/Music115/v4/fb/5c/f2/fb5cf235-2ae9-34c3-1ddb-ef896fb14175/16UMGIM58688.rgb.jpg/600x600bb.jpg" 
-        albumName="808s & Heartbreak"
-        artistName="Kanye West" 
-        releaseDate="November 24, 2008"
-        rating={8}
-        />
-        
+    <div class="flex flex-col w-full">
+        <h1 class="font-Montserrat text-slate-50 text-5xl mt-4 ml-4 font-bold">Music Review</h1>
+        <div class="flex flex-row w-full justify-around p-2 flex-wrap">
+            <Album 
+            imageSrc="https://is1-ssl.mzstatic.com/image/thumb/Music116/v4/41/36/cb/4136cbae-f6aa-b1fc-5452-6f5e153f28a4/886443853874.jpg/600x600bb.jpg"
+            albumName="Wolf"
+            artistName="Tyler, The Creator" 
+            releaseDate="April 2, 2013"
+            rating={10}
+            />
+            <Album 
+            imageSrc="https://is1-ssl.mzstatic.com/image/thumb/Music122/v4/ca/5b/c0/ca5bc0b3-d81d-cc6c-0d19-54b9eedb6dbd/12UMGIM52990.rgb.jpg/600x600bb.jpg"
+            albumName="good kid, m.A.A.d city"
+            artistName="Kendrick Lamar" 
+            releaseDate="October 22, 2012"
+            rating={10}
+            />
+            <Album 
+            imageSrc="https://is1-ssl.mzstatic.com/image/thumb/Music221/v4/7d/bd/e9/7dbde97e-b97d-8cc3-0203-218b687408a9/196872555059.jpg/600x600bb.jpg" 
+            albumName="Chromakopia"
+            artistName="Tyler, The Creator" 
+            releaseDate="October 28, 2024"
+            rating={9}
+            />
+            <Album 
+            imageSrc="https://is1-ssl.mzstatic.com/image/thumb/Music125/v4/fd/fd/8c/fdfd8c26-b8f9-4768-41d3-b24773250c65/886446605814.jpg/600x600bb.jpg" 
+            albumName="Flower Boy"
+            artistName="Tyler, The Creator" 
+            releaseDate="July 21, 2017"
+            rating={8}
+            />
+            <Album 
+            imageSrc="https://is1-ssl.mzstatic.com/image/thumb/Music115/v4/fb/5c/f2/fb5cf235-2ae9-34c3-1ddb-ef896fb14175/16UMGIM58688.rgb.jpg/600x600bb.jpg" 
+            albumName="808s & Heartbreak"
+            artistName="Kanye West" 
+            releaseDate="November 24, 2008"
+            rating={8}
+            />
+            
+        </div>
     </div>
 </Layout>
