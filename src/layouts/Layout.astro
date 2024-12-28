@@ -1,3 +1,7 @@
+---
+import '@fontsource-variable/montserrat';
+---
+
 <!doctype html>
 <html lang="en">
 	<head>
@@ -9,16 +13,14 @@
 	</head>
 	<body class="bg-zinc-950">
 		<nav class="flex flex-row justify-around items-center h-[7.5vh] bg-zinc-50/10">
-			<a href="/" class="text-zinc-50 font-Montserrat no-underline"><div>Home</div></a>
-			<a href="/projects" class="text-zinc-50 font-Montserrat no-underline"><div>Projects</div></a>
+			<a href="/" class="text-zinc-50 font-sans no-underline"><div>Home</div></a>
+			<a href="/projects" class="text-zinc-50 font-sans no-underline"><div>Projects</div></a>
 		</nav>
 		<slot />
 	</body>
 </html>
 
 <style>
-	@import url('https://fonts.googleapis.com/css2?family=DM+Serif+Text:ital@0;1&family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
-
 	html {
 		scroll-behavior: smooth;
 		-ms-overflow-style: none;  /* IE and Edge */
