@@ -7,7 +7,11 @@ export default {
 		fontFamily: {
 			sans: ['Montserrat Variable', ...defaultTheme.fontFamily.sans],
 		},
-		extend: {},
+		extend: {
+			backgroundImage: {
+				'plus': "url('/grid.svg')",
+			},
+		},
 	},
 	plugins: [],
 }
