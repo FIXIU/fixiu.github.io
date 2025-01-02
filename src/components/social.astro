@@ -1,9 +1,9 @@
 ---
-const { serviceName, serviceUrl, SVGPath, fillColor } = Astro.props;
+const { serviceName, serviceUrl, SVGPath } = Astro.props;
 ---
 
 <a href={serviceUrl} class="no-underline w-fit h-fit font-sans m-2 group">
-    <div class="flex flex-row justify-center h-full items-left p-2 bg-zinc-900 border-2 border-zinc-800 rounded-2xl w-16 h-16 group-hover:bg-zinc-50 group-hover:border-zinc-900">
+    <div class="flex flex-row justify-center items-left p-2 bg-zinc-900 border-2 border-zinc-800 rounded-2xl w-16 h-16 group-hover:bg-zinc-50 group-hover:border-zinc-900">
         <svg role="img" class="fill-zinc-50 group-hover:fill-zinc-900" width="35" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><title>{serviceName}</title><path d={SVGPath}></path></svg>
     </div>
 </a>
