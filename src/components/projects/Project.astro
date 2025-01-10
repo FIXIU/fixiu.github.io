@@ -1,10 +1,22 @@
 ---
-const { projectName, projectDesc, projectUrl } = Astro.props;
+const { projectName, projectDesc, projectUrl, flags } = Astro.props;
+
+var containerFlags = "bg-zinc-50/10 border-zinc-50/10";
+var textColor = "text-zinc-50";
+var descColor = "text-zinc-400";
+var anchor = "";
+
+if (flags == "WIP") {
+    containerFlags = "bg-zinc-900/10 border-zinc-400/10";
+    textColor = "text-zinc-500";
+    descColor = "text-zinc-600";
+    anchor = "cursor-not-allowed pointer-events-none";
+}
 ---
 
-<a href={projectUrl} class="no-underline w-fit h-fit font-sans m-2 grow">
-    <div class="flex flex-col justify-center h-full items-left p-4 bg-zinc-50/10 border-2 border-zinc-50/10 rounded-2xl w-full h-full">
-        <h1 class="text-zinc-50">{projectName}</h1>
-        <p class="text-zinc-400">{projectDesc}</p>
+<a href={projectUrl} class={`no-underline w-fit h-fit font-sans m-2 grow ${anchor}`}>
+    <div class={`flex flex-col justify-center h-full items-left p-4 ${containerFlags} border-2 rounded-2xl w-full h-full`}>
+        <h1 class={textColor}>{projectName}</h1>
+        <p class={descColor}>{projectDesc}</p>
     </div>
 </a>
