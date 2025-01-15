@@ -21,7 +21,7 @@ const { messageText } = Astro.props;
         <div class="relative flex w-full min-w-0 flex-col">
             <div class="flex-col gap-1 md:gap-3">
                 <div class="flex max-w-full flex-col flex-grow">
-                    <p class="text-[#ECECEC] whitespace-pre-wrap">{ messageText }</p>  <!-- TODO: MAYBE ADD MARKDOWN FUNCTIONALITY (LOOK AT INSPECT OF CHATGPT MESSAGE) -->
+                    <slot />
                 </div>
             </div>
         </div>

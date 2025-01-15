@@ -5,15 +5,41 @@ import UserMessage from '../../components/projects/wielomiany/UserMessage.astro'
 ---
 
 <Layout>
-  <main class="bg-[#212121]">
-    <section class="flex items-center justify-center font-sans font-bold h-[92.5vh]">
-      <h1 class="text-zinc-50 text-[10vw]">Wielomiany</h1>
-    </section>
-    <section>
-      <UserMessage messageText="Czym są wielomiany?" />
-      <ChatMessage messageText="Wielomiany to wyrażenia algebraiczne zbudowane z jednej lub więcej zmiennych (np. x) oraz stałych, połączonych operacjami dodawania, odejmowania i mnożenia, a także potęgowania do liczb całkowitych nieujemnych." />
-      <UserMessage messageText="Lorem Ipsum" />
-      <ChatMessage messageText="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus id bibendum nisl. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent gravida tincidunt semper. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Maecenas tristique nulla ut ligula ultrices tristique. Sed consectetur elit erat, ac tincidunt lacus consectetur vitae. Proin nibh dui, sodales at pharetra et, venenatis quis lorem. Nulla blandit arcu ligula, vitae ornare tellus pharetra eget. Nulla quis sollicitudin ante, at dapibus diam. Nunc non hendrerit metus, quis ultrices nisi." />
-    </section>
-  </main>
+	<main class="bg-[#212121]">
+		<section class="flex items-center justify-center font-sans font-bold h-[92.5vh]">
+			<h1 class="text-zinc-50 text-[10vw]">Wielomiany</h1>
+		</section>
+		<section>
+			<UserMessage>
+				<p class="text-[#ECECEC] whitespace-pre-wrap">Czym są wielomiany?</p>
+			</UserMessage>
+			<ChatMessage>
+				<p class="text-[#ECECEC] whitespace-pre-wrap">Wielomiany to wyrażenia algebraiczne zbudowane z jednej lub więcej zmiennych (np. x) oraz stałych, połączonych operacjami dodawania, odejmowania i mnożenia, a także potęgowania do liczb całkowitych nieujemnych.</p>
+			</ChatMessage>
+			<UserMessage>
+				<select class="text-[#ECECEC] whitespace-pre-wrap bg-transparent outline-none" id="selectMessage1">
+					<option class="bg-[#303030] p-2 outline-none active:bg-[#404040] focus:bg-[#404040]">
+						Jakie są rodzaje wielomianów?
+					</option>
+					<option class="bg-[#303030] p-2">
+						Jakie zastosowania mają wielomiany?
+				</select>
+			</UserMessage>
+			<ChatMessage>
+				<p class="text-[#ECECEC] whitespace-pre-wrap" id="dynamicChatMessage"></p>
+			</ChatMessage>
+
+		</section>
+	</main>
+	<script is:inline>
+        document.getElementById('selectMessage1').addEventListener('change', function() {
+            const selectedOption = this.value;
+            const chatMessageElement = document.getElementById('dynamicChatMessage');
+            if (selectedOption === 'Jakie są rodzaje wielomianów?') {
+                chatMessageElement.textContent = 'Rodzaje wielomianów to: jednomiany, dwumiany, trójmiany i wielomiany wyższych stopni.';
+            } else if (selectedOption === 'Jakie zastosowania mają wielomiany?') {
+                chatMessageElement.textContent = 'Wielomiany mają zastosowania w wielu dziedzinach matematyki, w tym w algebrze, analizie matematycznej i teorii liczb.';
+            }
+        });
+    </script>
 </Layout>
