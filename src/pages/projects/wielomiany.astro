@@ -12,7 +12,7 @@ import UserMessage from '../../components/projects/wielomiany/UserMessage.astro'
 				<h2 class="text-zinc-300 text-[1vw] font-semibold">Interaktywne narzędzie do nauki i analizy wielomianów – odkryj definicje, własności oraz metody rozwiązywania równań wielomianowych.</h2>
 			</div>
 		</section>
-		<section class="snap-start">
+		<section class="snap-start pb-10">
 			<UserMessage>
 				<p>Piszesz notatke dla uczniów 2 klasy technikum z matematyki rozszerzonej. Temat to wielomiany. Napisz szybkie wprowadzenie do wielomianów.</p>
 			</UserMessage>
@@ -156,7 +156,7 @@ import UserMessage from '../../components/projects/wielomiany/UserMessage.astro'
 			</ChatMessage>
 			<ChatMessage tags=""> <!-- TODO: make it hidden by default and show it only on all questions answered -->
 				<h1 class="text-[#ECECEC] whitespace-pre-wrap font-bold text-xl">Ściąga - Wielomiany</h1>
-				<h2 class="text-[#ECECEC] whitespace-pre-wrap font-semibold text-lg mt-8">Definicja</h2>
+				<h2 class="text-[#ECECEC] whitespace-pre-wrap font-semibold text-lg mt-8 mb-3">Definicja</h2>
 				<p>Wielomian to wyrażenie algebraiczne postaci:</p>
 				<p class="text-sm" is:raw>$$W(x) = a_n x^n + a_{n-1} x^{n-1} + \ldots + a_1 x + a_0$$</p>
 				<p>gdzie:</p>
@@ -177,7 +177,20 @@ import UserMessage from '../../components/projects/wielomiany/UserMessage.astro'
 					<li>Ostatnia liczba to <strong class="font-medium">reszta</strong> (jeśli 0 - \((x-x_0)\) jest dzielnikiem).</li>
 					<li>Pozostałe liczby tworzą wynikowy wielomian o stopień niższy.</li>
 				</ol>
-				<h2 class="text-[#ECECEC] whitespace-pre-wrap font-semibold text-lg mt-6">Szybkie sprawdzenie wyniku? - podstaw losowe \(x\) i porównaj wartości!</h2>
+				<h2 class="text-[#ECECEC] whitespace-pre-wrap font-semibold text-lg mt-6 mb-3">Twierdzenie Bezouta</h2>
+				<p>Jeśli \(W(x_0)=0\), to \((x-x_0)\) jest dzielnikiem \(W(x)\).</p>
+				<h2 class="text-[#ECECEC] whitespace-pre-wrap font-semibold text-lg mt-6 mb-3">Rozkład na czynniki</h2>
+				<p>Szukamy pierwiastków \(x_0\), dzielimy przez \((x-x_0)\) i powtarzamy dla wynikowego wielomianu.</p>
+				<h3 class="text-[#ECECEC] whitespace-pre-wrap font-medium text-base mt-6 mb-1">Przykład</h3>
+				<p>\(W(x)=x^3-3x^2+4x-2\)</p>
+				<p>Dzielimy przez \((x-2)\), otrzymujemy \(x^2-x+1\).</p>
+				<h3 class="text-[#ECECEC] whitespace-pre-wrap font-medium text-base mt-6 mb-1">Warto zapamiętać</h3>
+				<ul>
+					<li>Stopień iloczynu wielomianów to suma ich stopni.</li>
+					<li>Wielomian zerowy ma nieskończenie wiele pierwiastków.</li>
+					<li>Każdy wielomian rzeczywisty stopnia \(n\) ma co najwyżej \(n\) pierwiastków.</li>
+				</ul>
+				<h2 class="text-[#ECECEC] whitespace-pre-wrap font-semibold text-lg mt-2">Szybkie sprawdzenie wyniku? <strong class="font-normal">- podstaw losowe \(x\) i porównaj wartości!</strong></h2>
 			</ChatMessage>
 		</section>
 	</main>
