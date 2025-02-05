@@ -6,8 +6,11 @@ import UserMessage from '../../components/projects/wielomiany/UserMessage.astro'
 ---
 <Layout>
 	<main class="bg-[#212121]">
-		<section class="flex items-center justify-center font-sans font-bold h-[92.5vh]">
-			<h1 class="text-zinc-50 text-[10vw]">Wielomiany</h1>
+		<section class="flex items-center justify-center flex-col font-sans font-bold h-[92.5vh]">
+			<div class="flex flex-col items-left justify-center w-1/2">
+				<h1 class="text-zinc-50 text-[5vw] pr-2">Wielomiany</h1>
+				<h2 class="text-zinc-300 text-[1vw] font-semibold">Interaktywne narzędzie do nauki i analizy wielomianów – odkryj definicje, własności oraz metody rozwiązywania równań wielomianowych.</h2>
+			</div>
 		</section>
 		<section class="snap-start">
 			<UserMessage>
@@ -150,39 +153,32 @@ import UserMessage from '../../components/projects/wielomiany/UserMessage.astro'
 				<p>Odpowiedz na zadanie</p>
 				<br>
 				<p id="secondQuestionOutput"></p>
-				<h1 class="text-[#ECECEC] whitespace-pre-wrap font-bold text-xl mt-8">Zadanie 2</h1>
-				<p>Podziel wielomian</p>
-				<p is:raw>$$P(x)=x^3-4x^2+6x-3$$</p>
-				<p>przez \((x-2)\) za pomocą schematu Hornera.</p>
-				<p class="text-semibold">Podpowiedź:</p>
+			</ChatMessage>
+			<ChatMessage tags=""> <!-- TODO: make it hidden by default and show it only on all questions answered -->
+				<h1 class="text-[#ECECEC] whitespace-pre-wrap font-bold text-xl">Ściąga - Wielomiany</h1>
+				<h2 class="text-[#ECECEC] whitespace-pre-wrap font-semibold text-lg mt-8">Definicja</h2>
+				<p>Wielomian to wyrażenie algebraiczne postaci:</p>
+				<p class="text-sm" is:raw>$$W(x) = a_n x^n + a_{n-1} x^{n-1} + \ldots + a_1 x + a_0$$</p>
+				<p>gdzie:</p>
 				<ul>
-					<li>Ostatnia liczba w schemacie to reszta.</li>
-					<li>Jeśli reszta to 0, to \((x-2)\) jest dzielnikiem \(P(x)\).</li>
-					<li>Wynik dzielenia to nowy wielomian stopnia o 1 mniejszego.</li>
+					<li>\(n\) - stopień wielomianu (najwyższa potęga \(x\)),</li>
+					<li is:raw>\(a_n, a_{n-1}, \ldots, a_1, a_0\) - współczynniki wielomianu (liczby rzeczywiste),</li>
+					<li>\(a_n \neq 0\).</li>
 				</ul>
+				<h2 class="text-[#ECECEC] whitespace-pre-wrap font-semibold text-lg mt-6">Działania na wielomianach</h2>
+				<ul>
+					<li><strong class="font-medium">Dodawanie/odejmowanie</strong> - sumujemy/pomniejszamy współczynniki przy tych samych potęgach.</li>
+					<li><strong class="font-medium">Mnożenie</strong> - stosujemy rozdzielność mnożenia względem dodawania.</li>
+					<li><strong class="font-medium">Dzielenie</strong> - możemy stosować schemat Hornera lub dzielenie pisemne.</li>
+				</ul>
+				<h2 class="text-[#ECECEC] whitespace-pre-wrap font-semibold text-lg mt-6">Schemat Hornera - Szybkie obliczanie \(W(x_0)\)</h2>
+				<ol>
+					<li>Wykonaj schemat Hornera.</li>
+					<li>Ostatnia liczba to <strong class="font-medium">reszta</strong> (jeśli 0 - \((x-x_0)\) jest dzielnikiem).</li>
+					<li>Pozostałe liczby tworzą wynikowy wielomian o stopień niższy.</li>
+				</ol>
+				<h2 class="text-[#ECECEC] whitespace-pre-wrap font-semibold text-lg mt-6">Szybkie sprawdzenie wyniku? - podstaw losowe \(x\) i porównaj wartości!</h2>
 			</ChatMessage>
-			<!--
-			<UserMessage>
-				<select class="text-[#ECECEC] whitespace-pre-wrap bg-transparent outline-none" id="selectMessage1" onchange="changeMessage('selectMessage1', 'dynamicMessage1');">
-					<option class="bg-[#303030] p-2 outline-none active:bg-[#404040] focus:bg-[#404040]">
-						Jakie są rodzaje wielomianów?
-					</option>
-					<option class="bg-[#303030] p-2">
-						Jakie zastosowania mają wielomiany?
-				</select>
-			</UserMessage>
-			<ChatMessage>
-				<p id="dynamicMessage1"></p>
-			</ChatMessage>
-			-->
-			<UserMessage>
-				<p>Daj mi jakieś zadanie, w miare proste</p>
-			</UserMessage>
-			<ChatMessage>
-				<h2 class="text-[#ECECEC] whitespace-pre-wrap font-semibold text-lg mb-6">Oto proste zadanie z wielomianów:</h2>
-				<p>Rozłóż na czynniki wielomian $$W(x) = x^3 - 3x^2- 4x + 12.$$</p>
-				<p class="text-base mt-4">Powodzenia! Spróbuj rozwiązać je samemu w zeszycie.</p>
-			</ChatMessage>	
 		</section>
 	</main>
 	<style>
@@ -221,8 +217,6 @@ import UserMessage from '../../components/projects/wielomiany/UserMessage.astro'
 	<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
 	<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 	<script>
-		// @ts-nocheck
-		// @ts-ignore
 		(window as any).checkAnswer = function(inputId: string, correctAnswer: string, outputId: string) {
 			console.log('checkAnswer');
 			const input = document.getElementById(inputId);
@@ -272,15 +266,5 @@ import UserMessage from '../../components/projects/wielomiany/UserMessage.astro'
             document.getElementById("result").innerHTML = latexTable;
             MathJax.typeset();
         }
-		// function changeMessage(idOfSelect, idOfMessage) 
-		// {
-		// 	var selectedOption = document.getElementById(idOfSelect).value;
-		// 	var chatMessageElement = document.getElementById(idOfMessage);
-		// 	if (selectedOption === 'Jakie są rodzaje wielomianów?') {
-		// 		chatMessageElement.textContent = 'Rodzaje wielomianów to: jednomiany, dwumiany, trójmiany i wielomiany wyższych stopni.';
-		// 	} else if (selectedOption === 'Jakie zastosowania mają wielomiany?') {
-		// 		chatMessageElement.textContent = 'Wielomiany mają zastosowania w wielu dziedzinach matematyki, w tym w algebrze, analizie matematycznej i teorii liczb.';
-		// 	}
-		// }
     </script>
 </Layout>

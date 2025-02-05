@@ -1,8 +1,8 @@
 ---
-const { messageText } = Astro.props;
+const { tags } = Astro.props;
 ---
 
-<div class="m-auto text-base py-[18px] px-3 md:px-4 w-full md:px-5 lg:px-4 xl:px-5">
+<div class={`m-auto text-base py-[18px] px-3 w-full md:px-5 lg:px-4 xl:px-5 ${tags}`}>
     <div class="mx-auto flex flex-1 gap-4 text-base md:gap-5 lg:gap-6 md:max-w-3xl lg:max-w-[40rem] xl:max-w-[48rem]">
         <div class="flex-shrink-0 flex flex-col relative items-end">
             <div>
