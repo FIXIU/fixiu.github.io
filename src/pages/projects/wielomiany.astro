@@ -118,18 +118,28 @@ import UserMessage from '../../components/projects/wielomiany/UserMessage.astro'
 				<h1 class="text-[#ECECEC] whitespace-pre-wrap font-bold text-xl mb-8">Spróbuj tego kalkulatora który dla ciebie przygotowałem!</h1>
 
 				<div class="flex items-center justify-center flex-col">
-					<div class="w-full">
-						<label class="text-[#ECECEC] whitespace-pre-wrap text-sm">Wpisz współczynniki wielomianu (oddzielone przecinkami):</label>
-						<input class="text-[#ECECEC] whitespace-pre-wrap bg-[#212121] w-32 text-sm" type="text" id="coefficients" placeholder="2,-3,4,-5">
+					<div class="w-full md:w-3/4 lg:w-1/2">
+						<label class="text-[#ECECEC] whitespace-pre-wrap text-sm block mb-2">Wpisz współczynniki wielomianu:</label>
+						<input class="text-[#ECECEC] whitespace-pre-wrap bg-[#212121] w-full p-3 rounded-md border border-[#444]" type="text" id="coefficients" placeholder="2,-3,4,-5">
 					</div>
-					<div class="w-full">
-						<label class="text-[#ECECEC] whitespace-pre-wrap text-sm">Podaj dzielnik (x - c), c =</label>
-						<input type="number" id="divisor" placeholder="2" class="grow w-32 bg-[#212121] text-sm">
+					<div class="w-full md:w-3/4 lg:w-1/2 mt-4">
+						<label class="text-[#ECECEC] whitespace-pre-wrap text-sm block mb-2">Podaj dzielnik (x - c), c =</label>
+						<input type="number" id="divisor" placeholder="2" class="w-full p-3 rounded-md border border-[#444] bg-[#212121] text-sm">
 					</div>
-	
-					<button onclick="calculateRuffini()" class="mt-8 relative flex h-10 w-20 right-[-0.625rem] items-center justify-center rounded-full transition-colors hover:opacity-70 focus-visible:outline-none focus-visible:outline-black disabled:text-[#f4f4f4] disabled:hover:opacity-100 dark:focus-visible:outline-white disabled:dark:bg-token-text-quaternary dark:disabled:text-token-main-surface-secondary bg-black text-white dark:bg-white dark:text-black disabled:bg-[#D7D7D7]">Oblicz</button>
-	
-					<div class="output text-[#ECECEC] whitespace-pre-wrap" id="result"></div>
+
+					<button onclick="calculateRuffini()" class="mt-6 flex h-12 px-6 items-center justify-center rounded-full transition-colors hover:opacity-70 bg-white text-black text-base">Oblicz</button>
+				</div>
+				<div class="output text-[#ECECEC] whitespace-pre-wrap" id="result"></div>
+
+				<div class="mt-10 w-full">
+					<h2 class="text-[#ECECEC] whitespace-pre-wrap font-semibold text-lg mb-4">Wizualizacja wielomianu</h2>
+					<div class="relative w-full" style="height: 0; padding-bottom: 66.7%;">
+						<canvas id="polynomialGraph" class="absolute top-0 left-0 w-full h-full bg-[#303030] rounded-lg"></canvas>
+					</div>
+					<div class="flex flex-col sm:flex-row justify-center mt-4 gap-4">
+						<button onclick="drawPolynomialGraph()" class="flex h-12 px-4 items-center justify-center rounded-full bg-white text-black hover:opacity-70 text-sm sm:text-base">Pokaż wykres</button>
+						<button onclick="toggleRoots()" class="flex h-12 px-4 items-center justify-center rounded-full bg-[#444] text-white hover:opacity-70 text-sm sm:text-base">Pokaż miejsca zerowe</button>
+					</div>
 				</div>
 			</ChatMessage>
 			<UserMessage>
@@ -225,7 +235,19 @@ import UserMessage from '../../components/projects/wielomiany/UserMessage.astro'
 			flex-grow: 1;
 			min-width: 10px;
 		}
+
+		.math-container {
+			overflow-x: auto;
+			margin: 1rem 0;
+			padding: 0.5rem 0;
+		}
 		
+		@media (max-width: 640px) {
+			.mjx-container {
+				font-size: 90% !important;
+			}
+		}
+			
 	</style>
 	<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
 	<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
@@ -245,39 +267,292 @@ import UserMessage from '../../components/projects/wielomiany/UserMessage.astro'
 		}
 	</script>
 	<script is:inline>
-		function calculateRuffini() {
-            // Get user input
-            let coeffs = document.getElementById("coefficients").value.split(",").map(Number);
-            let c = parseFloat(document.getElementById("divisor").value);
-            
-            // Ruffini's method calculations
-            let n = coeffs.length;
-            let row1 = [...coeffs];
-            let row2 = Array(n).fill(0);
-            let row3 = Array(n).fill(0);
-            
-            row3[0] = row1[0]; // First coefficient remains the same
+    // Global variable for showing roots
+    let showRoots = false;
 
-            for (let i = 1; i < n; i++) {
-                row2[i] = row3[i - 1] * c;
-                row3[i] = row1[i] + row2[i];
-            }
+    function calculateRuffini() {
+        // Get user input
+        let coeffs = document.getElementById("coefficients").value.split(",").map(Number);
+        let c = parseFloat(document.getElementById("divisor").value);
+        
+        // Ruffini's method calculations
+        let n = coeffs.length;
+        let row1 = [...coeffs];
+        let row2 = Array(n).fill(0);
+        let row3 = Array(n).fill(0);
+        
+        row3[0] = row1[0]; // First coefficient remains the same
 
-            // Convert to MathJax format
-            let latexTable = `
-                \\[
-                \\begin{array}{r|${'r'.repeat(n)}}
-                ${c} & ${row1.join(" & ")} \\\\ 
-                    & ${row2.map(x => x === 0 ? "" : x).join(" & ")} \\\\ 
-                \\hline
-                    & ${row3.join(" & ")}
-                \\end{array}
-                \\]
-            `;
-
-            // Display result
-            document.getElementById("result").innerHTML = latexTable;
-            MathJax.typeset();
+        for (let i = 1; i < n; i++) {
+            row2[i] = row3[i - 1] * c;
+            row3[i] = row1[i] + row2[i];
         }
-    </script>
+
+        // Convert to MathJax format
+        let latexTable = `
+            \\[
+            \\begin{array}{r|${'r'.repeat(n)}}
+            ${c} & ${row1.join(" & ")} \\\\ 
+                & ${row2.map(x => x === 0 ? "" : x).join(" & ")} \\\\ 
+            \\hline
+                & ${row3.join(" & ")}
+            \\end{array}
+            \\]
+        `;
+
+        // Display result
+        document.getElementById("result").innerHTML = latexTable;
+        MathJax.typeset();
+        
+        // Update the graph as well
+        drawPolynomialGraph();
+    }
+
+    // Helper function for polynomial evaluation
+    function evaluatePolynomial(coeffs, x) {
+        return coeffs.reduce((sum, coeff, i) => 
+            sum + coeff * Math.pow(x, coeffs.length - i - 1), 0);
+    }
+    
+    // Root finding algorithm using bisection method
+    function findRoots(coeffs) {
+        // Simple root finding algorithm using bisection method
+        // Only finds roots in the range [-10, 10]
+        const roots = [];
+        const precision = 0.01;
+        const samples = 1000;
+        
+        for (let i = 0; i < samples - 1; i++) {
+            const x1 = -10 + (i * 20) / samples;
+            const x2 = -10 + ((i + 1) * 20) / samples;
+            const y1 = evaluatePolynomial(coeffs, x1);
+            const y2 = evaluatePolynomial(coeffs, x2);
+            
+            if (y1 * y2 <= 0) { // Sign change indicates a root
+                // Perform bisection to find more accurate root
+                let a = x1;
+                let b = x2;
+                let c;
+                
+                for (let j = 0; j < 10; j++) {
+                    c = (a + b) / 2;
+                    const yc = evaluatePolynomial(coeffs, c);
+                    if (Math.abs(yc) < precision) break;
+                    if (yc * evaluatePolynomial(coeffs, a) < 0) {
+                        b = c;
+                    } else {
+                        a = c;
+                    }
+                }
+                
+                roots.push((a + b) / 2);
+            }
+        }
+        
+        return roots;
+    }
+    
+    // Toggle roots visibility
+    function toggleRoots() {
+        showRoots = !showRoots;
+        drawPolynomialGraph();
+    }
+    
+    // Main graph drawing function
+    function drawPolynomialGraph() {
+        const canvas = document.getElementById("polynomialGraph");
+        const ctx = canvas.getContext("2d");
+        const width = canvas.width;
+        const height = canvas.height;
+        
+        // Clear canvas
+        ctx.clearRect(0, 0, width, height);
+        
+        // Get coefficients from input
+        let coeffs = document.getElementById("coefficients").value.split(",").map(Number);
+        if (!coeffs.length || coeffs.some(isNaN)) {
+            ctx.font = "20px Arial";
+            ctx.fillStyle = "#ECECEC";
+            ctx.textAlign = "center";
+            ctx.fillText("Wprowadź poprawne współczynniki wielomianu", width/2, height/2);
+            return;
+        }
+        
+        // Draw axes
+        ctx.strokeStyle = "#666";
+        ctx.lineWidth = 1;
+        ctx.beginPath();
+        
+        // X-axis
+        ctx.moveTo(0, height/2);
+        ctx.lineTo(width, height/2);
+        
+        // Y-axis
+        ctx.moveTo(width/2, 0);
+        ctx.lineTo(width/2, height);
+        
+        // Draw axes ticks
+        for (let x = -10; x <= 10; x += 1) {
+            const screenX = width/2 + x * width/20;
+            
+            // Vertical grid line
+            ctx.moveTo(screenX, 0);
+            ctx.lineTo(screenX, height);
+            
+            // X-axis tick label
+            if (x % 2 === 0 && x !== 0) {
+                ctx.fillStyle = "#AAA";
+                ctx.font = "12px Arial";
+                ctx.textAlign = "center";
+                ctx.fillText(x.toString(), screenX, height/2 + 20);
+            }
+        }
+        
+        // Horizontal grid lines and labels
+        for (let y = -5; y <= 5; y += 1) {
+            const screenY = height/2 - y * height/10;
+            
+            ctx.moveTo(0, screenY);
+            ctx.lineTo(width, screenY);
+            
+            // Y-axis tick label
+            if (y % 2 === 0 && y !== 0) {
+                ctx.fillStyle = "#AAA";
+                ctx.font = "12px Arial";
+                ctx.textAlign = "right";
+                ctx.fillText(y.toString(), width/2 - 10, screenY + 5);
+            }
+        }
+        
+        ctx.strokeStyle = "#444";
+        ctx.stroke();
+        
+        // Draw polynomial
+        ctx.beginPath();
+        ctx.strokeStyle = "#00AAFF";
+        ctx.lineWidth = 2;
+        
+        let firstPoint = true;
+        for (let screenX = 0; screenX <= width; screenX++) {
+            // Convert screen x to mathematical x
+            const x = (screenX - width/2) / (width/20);
+            
+            // Evaluate polynomial at x
+            const y = evaluatePolynomial(coeffs, x);
+            
+            // Convert mathematical y to screen y
+            const screenY = height/2 - y * height/10;
+            
+            // Draw point or line
+            if (firstPoint) {
+                ctx.moveTo(screenX, screenY);
+                firstPoint = false;
+            } else {
+                ctx.lineTo(screenX, screenY);
+            }
+        }
+        ctx.stroke();
+        
+        // Highlight polynomial value at divisor point if available
+        const divisor = parseFloat(document.getElementById("divisor").value);
+        if (!isNaN(divisor)) {
+            const screenX = width/2 + divisor * width/20;
+            const y = evaluatePolynomial(coeffs, divisor);
+            const screenY = height/2 - y * height/10;
+            
+            // Draw point
+            ctx.beginPath();
+            ctx.fillStyle = "#FF5555";
+            ctx.arc(screenX, screenY, 6, 0, 2 * Math.PI);
+            ctx.fill();
+            
+            // Label point
+            ctx.fillStyle = "#ECECEC";
+            ctx.font = "14px Arial";
+            ctx.textAlign = "left";
+            ctx.fillText(`W(${divisor}) = ${y.toFixed(2)}`, screenX + 10, screenY - 10);
+        }
+        
+        // Find and display roots if enabled
+        if (showRoots) {
+            const roots = findRoots(coeffs);
+            
+            ctx.fillStyle = "#33FF33";
+            ctx.font = "14px Arial";
+            
+            roots.forEach(root => {
+                const screenX = width/2 + root * width/20;
+                const screenY = height/2;
+                
+                // Draw root point
+                ctx.beginPath();
+                ctx.arc(screenX, screenY, 6, 0, 2 * Math.PI);
+                ctx.fill();
+                
+                // Label root
+                ctx.fillStyle = "#CCFFCC";
+                ctx.textAlign = "center";
+                ctx.fillText(`x = ${root.toFixed(2)}`, screenX, screenY - 15);
+            });
+        }
+    }
+
+    // Add this to your existing JS to make canvas responsive
+    function resizeCanvas() {
+        const canvas = document.getElementById("polynomialGraph");
+        if (!canvas) return;
+        
+        // Set canvas dimensions based on its container
+        const container = canvas.parentElement;
+        canvas.width = container.clientWidth;
+        canvas.height = container.clientHeight;
+        
+        // Redraw if we already have data
+        if (document.getElementById("coefficients").value) {
+            drawPolynomialGraph();
+        }
+    }
+
+    // Call on page load and window resize
+    window.addEventListener('DOMContentLoaded', resizeCanvas);
+    window.addEventListener('resize', resizeCanvas);
+
+    // Add this to your JavaScript for mobile swipe interactions
+    function setupTouchEvents() {
+        const canvas = document.getElementById("polynomialGraph");
+        if (!canvas) return;
+        
+        let touchStartX = 0;
+        let touchEndX = 0;
+        
+        canvas.addEventListener('touchstart', function(e) {
+            touchStartX = e.changedTouches[0].screenX;
+        }, false);
+        
+        canvas.addEventListener('touchend', function(e) {
+            touchEndX = e.changedTouches[0].screenX;
+            handleSwipe();
+        }, false);
+        
+        function handleSwipe() {
+            if (touchEndX < touchStartX - 50) {
+                // Swipe left - zoom in
+                zoomPolynomial(1.2);
+            }
+            
+            if (touchEndX > touchStartX + 50) {
+                // Swipe right - zoom out
+                zoomPolynomial(0.8);
+            }
+        }
+        
+        function zoomPolynomial(factor) {
+            // Implement zoom functionality for the graph
+            // This would adjust the x/y scale factors in drawPolynomialGraph
+        }
+    }
+
+    window.addEventListener('DOMContentLoaded', setupTouchEvents);
+</script>
 </Layout>
+```astro
