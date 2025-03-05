@@ -1,0 +1,15 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Game from '../../components/projects/game_review/Game.astro';
+---
+<Layout>
+    <section class="flex flex-col w-full text-slate-100 text-4xl font-bold p-2">
+        Game Review
+    </section>
+    <section class="flex flex-row w-full p-2 flex-wrap h-[92.5vh] content-start justify-around">
+        <Game gameBanner="https://cdn.cloudflare.steamstatic.com/steam/apps/1091500/library_600x900_2x.jpg" gameName="Cyberpunk 2077" rating="99" />
+        <Game gameBanner="https://cdn.cloudflare.steamstatic.com/steam/apps/1551360/library_600x900_2x.jpg" gameName="Forza Horizon 5" rating="87" />
+        <Game gameBanner="https://cdn.cloudflare.steamstatic.com/steam/apps/361420/library_600x900_2x.jpg" gameName="Astroneer" rating="74" />
+        <Game gameBanner="https://cdn.cloudflare.steamstatic.com/steam/apps/227300/library_600x900_2x.jpg" gameName="Euro Truck Simulator 2" rating="68" />
+    </section>
+</Layout>

@@ -1,0 +1,14 @@
+---
+import { Image } from 'astro:assets';
+
+const { gameBanner, gameName, rating } = Astro.props;
+---
+<div class="flex flex-col h-fit items-center w-fit group">
+    <div class="h-[420px] w-[280px] relative group-hover:scale-105 ease-in-out duration-150">
+        <Image class="rounded-md group-hover:saturate-50 group-hover:blur-[1px] group-hover:brightness-50 ease-in-out duration-150" src={gameBanner} alt={gameName} width="600" height="900" decoding="async" loading="lazy"/>
+        <div class="flex flex-col w-full items-end absolute bottom-0 p-3 opacity-0 group-hover:opacity-100 ease-in-out duration-150">
+            <h1 class="text-zinc-200 font-semibold text-2xl">{gameName}</h1>
+            <h1 class="text-zinc-200 font-semibold text-5xl">{rating}/100</h1>
+        </div>
+    </div>
+</div>
