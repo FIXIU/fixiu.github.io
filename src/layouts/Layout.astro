@@ -1,51 +1,136 @@
 ---
 import '@fontsource-variable/montserrat';
-
 import '../styles/global.css';
 ---
 
 <!doctype html>
 <html lang="en">
-	<head>
-		<meta charset="UTF-8" />
-		<meta name="viewport" content="width=device-width" />
-		<link rel="icon" type="image/svg+xml" href="fixiu.github.io/favicon.svg" />
-		<meta name="generator" content={Astro.generator} />
-		<title>FIXIU</title>
-	</head>
-	<body class="bg-zinc-950">
-		<nav class="flex flex-row justify-around items-center h-[7.5vh] bg-zinc-50/10 border-b border-zinc-50/10">
-			<a href="/" class="text-zinc-200 font-sans no-underline"><div>Home</div></a>
-			<a href="/projects" class="text-zinc-200 font-sans no-underline"><div>Projects</div></a>
-			<a href="/contact" class="text-zinc-200 font-sans no-underline"><div>Contact</div></a>
-		</nav>
-		<slot />
-		<footer class="h-[7.5vh] bg-zinc-50/10 bottom-0 w-full border-t border-zinc-50/10">
-			<div class="flex flex-row justify-around items-center h-full w-full text-zinc-200 font-sans">
-				<div class="text-zinc-200 font-sans"><a class="no-underline" href="https://github.com/FIXIU/">© 2024 - 2025 Filip Kowalczyk. All rights reserved.</a></div>
-				<div class="text-zinc-200 font-sans"><a class="no-underline" href="https://astro.build/">Made with Astro</a></div>
-			</div>
-		</footer>
-		<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
-		<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-	</body>
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width" />
+        <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+        <meta name="generator" content={Astro.generator} />
+        <title>FIXIU</title>
+    </head>
+    <body class="bg-zinc-950 flex flex-col min-h-screen">
+        <header class="sticky top-0 z-50">
+            <nav class="flex justify-between items-center h-16 px-6 md:px-12 bg-zinc-900/90 backdrop-blur-sm border-b border-zinc-800">
+                <div class="flex items-center">
+                    <a href="/" class="text-zinc-100 font-bold text-xl tracking-tight">FIXIU</a>
+                </div>
+                <div class="hidden md:flex space-x-8">
+                    <a href="/" class="nav-link">Home</a>
+                    <a href="/projects" class="nav-link">Projects</a>
+                    <a href="/contact" class="nav-link">Contact</a>
+                </div>
+                <button id="menu-toggle" class="md:hidden text-zinc-200">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
+                    </svg>
+                </button>
+            </nav>
+            <div id="mobile-menu" class="hidden md:hidden bg-zinc-900/90 backdrop-blur-sm">
+                <div class="px-4 py-2 space-y-2 border-b border-zinc-800">
+                    <a href="/" class="block py-2 nav-link">Home</a>
+                    <a href="/projects" class="block py-2 nav-link">Projects</a>
+                    <a href="/contact" class="block py-2 nav-link">Contact</a>
+                </div>
+            </div>
+        </header>
+        
+        <main class="flex-1">
+            <slot />
+        </main>
+        
+        <footer class="bg-zinc-900/90 border-t border-zinc-800 py-8">
+            <div class="container mx-auto px-6">
+                <div class="flex flex-col md:flex-row justify-between items-center">
+                    <div class="mb-4 md:mb-0">
+                        <p class="text-zinc-400 text-sm">© 2024 - 2025 Filip Kowalczyk. All rights reserved.</p>
+                    </div>
+                    <div class="text-zinc-400 text-sm">
+                        <a href="https://astro.build/" class="hover:text-zinc-200">Made with Astro</a>
+                    </div>
+                </div>
+            </div>
+        </footer>
+        
+        <script>
+            // Mobile menu toggle
+            document.getElementById('menu-toggle')?.addEventListener('click', () => {
+                const mobileMenu = document.getElementById('mobile-menu');
+                mobileMenu?.classList.toggle('hidden');
+            });
+            
+            // Set active nav link
+            document.addEventListener('DOMContentLoaded', () => {
+                const currentPath = window.location.pathname;
+                const navLinks = document.querySelectorAll('.nav-link');
+                
+                navLinks.forEach(link => {
+                    const href = link.getAttribute('href');
+                    if (href === currentPath || (href === '/' && currentPath === '')) {
+                        link.classList.add('active-nav-link');
+                    }
+                });
+            });
+        </script>
+        
+        <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+        <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    </body>
 </html>
 
 <style>
-	html {
-		scroll-behavior: smooth;
-		-ms-overflow-style: none;  /* IE and Edge */
-		scrollbar-width: none;  /* Firefox */
-	}
-	
-	html::-webkit-scrollbar {
-		display: none;
-	}
-	html,
-	body {
-		margin: 0;
-		width: 100%;
-		height: 100%;
-	}
-
+    html {
+        scroll-behavior: smooth;
+        -ms-overflow-style: none;  /* IE and Edge */
+        scrollbar-width: none;  /* Firefox */
+    }
+    
+    html::-webkit-scrollbar {
+        display: none;
+    }
+    
+    html, body {
+        margin: 0;
+        width: 100%;
+        height: 100%;
+    }
+    
+    .nav-link {
+        color: #e4e4e7;
+        font-family: 'Montserrat Variable', sans-serif;
+        text-decoration: none;
+        font-size: 0.95rem;
+        position: relative;
+        transition: color 0.3s;
+    }
+    
+    .nav-link:hover {
+        color: #ffffff;
+    }
+    
+    .nav-link::after {
+        content: '';
+        position: absolute;
+        width: 0;
+        height: 1px;
+        bottom: -1px;
+        left: 0;
+        background-color: #ffffff;
+        transition: cubic-bezier(.5,0,0,1) width 0.2s;
+    }
+    
+    .nav-link:hover::after {
+        width: 100%;
+    }
+    
+    .active-nav-link {
+        color: #ffffff;
+    }
+    
+    .active-nav-link::after {
+        width: 100%;
+    }
 </style>

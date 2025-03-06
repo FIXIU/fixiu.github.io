@@ -4,9 +4,29 @@ import Project from '../components/projects/Project.astro';
 ---
 
 <Layout>
-    <section class="flex flex-row w-full justify-around p-2 flex-wrap h-[92.5vh] content-start">
-        <Project projectName="Music" projectDesc="A website I've made to learn new skills" projectUrl="/projects/music" />
-        <Project projectName="Wielomiany" projectDesc="Maths long term project. Polish language" projectUrl="/projects/wielomiany" />
-    </section>
-	
+    <div class="px-5 py-8 max-w-7xl mx-auto min-h-[92vh]">
+        <header class="mb-10">
+            <h1 class="text-4xl font-bold text-zinc-100 mb-2">Projects</h1>
+            <p class="text-zinc-400">A collection of my work and side projects</p>
+        </header>
+
+        <section class="flex flex-wrap justify-center gap-2">
+            <Project 
+                projectName="Music"
+                projectDesc="A website I've made to learn new skills and showcase music-related content"
+                projectUrl="/projects/music"
+            />
+            <Project 
+                projectName="Wielomiany"
+                projectDesc="Maths long term project exploring polynomial functions and their applications"
+                projectUrl="/projects/wielomiany"
+            />
+            <Project 
+                projectName="Coming Soon"
+                projectDesc="A new project currently under development"
+                projectUrl="/projects/upcoming"
+                flags="WIP"
+            />
+        </section>
+    </div>
 </Layout>

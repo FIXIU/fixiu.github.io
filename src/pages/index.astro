@@ -3,9 +3,78 @@ import Layout from '../layouts/Layout.astro';
 ---
 
 <Layout>
-	<main class="flex flex-col w-full text-zinc-200">
-		<section class="w-full flex items-center justify-center h-[92.5vh]">
-			<h1 class="font-sans font-bold text-zinc-200 text-[25vw] subpixel-antialiased">FIXIU</h1>
-		</section>
-	</main>
+    <main class="flex flex-col w-full text-zinc-200">
+        <section class="w-full flex items-center justify-center h-[92.5vh]">
+            <h1 class="font-sans font-bold text-zinc-200 text-[25vw] subpixel-antialiased">FIXIU</h1>
+        </section>
+        
+        <section class="w-full flex flex-col items-center justify-center py-20 px-4">
+            <div class="max-w-3xl">
+                <h2 class="text-4xl font-bold mb-6">Hey there, I'm FIXIU</h2>
+                <p class="text-xl text-zinc-400 mb-6">I'm a CS student interested mainly in making desktop applications and web-design</p>
+                <div class="flex gap-4 mt-8">
+                    <a href="/projects" class="px-6 py-3 bg-zinc-800 hover:bg-zinc-700 rounded-lg text-zinc-200 transition-all">View Projects</a>
+                    <a href="/contact" class="px-6 py-3 border border-zinc-700 hover:border-zinc-500 rounded-lg transition-all">Contact Me</a>
+                </div>
+            </div>
+        </section>
+
+        <section class="w-full py-20 px-4 bg-zinc-900">
+            <div class="max-w-5xl mx-auto">
+                <h2 class="text-3xl font-bold mb-12 text-center">Featured Projects</h2>
+                <div class="grid md:grid-cols-2 gap-6">
+                    <div class="bg-zinc-800 p-6 rounded-lg hover:bg-zinc-700 transition-all">
+                        <h3 class="text-xl font-bold mb-2">Music Review</h3>
+                        <p class="text-zinc-400 mb-4">A website I've made to learn new skills</p>
+                        <a href="/projects/music" class="text-zinc-300 hover:text-white">View project →</a>
+                    </div>
+                    <div class="bg-zinc-800 p-6 rounded-lg hover:bg-zinc-700 transition-all">
+                        <h3 class="text-xl font-bold mb-2">Wielomiany</h3>
+                        <p class="text-zinc-400 mb-4">Maths long term project. Polish language</p>
+                        <a href="/projects/wielomiany" class="text-zinc-300 hover:text-white">View project →</a>
+                    </div>
+                </div>
+                <div class="text-center mt-10">
+                    <a href="/projects" class="px-6 py-3 border border-zinc-700 hover:border-zinc-500 rounded-lg transition-all">See all projects</a>
+                </div>
+            </div>
+        </section>
+
+        <section class="w-full py-20 px-4">
+            <div class="max-w-5xl mx-auto">
+                <h2 class="text-3xl font-bold mb-12 text-center">Skills & Technologies</h2>
+                
+                <div class="grid md:grid-cols-3 gap-10">
+                    <div>
+                        <h3 class="text-xl font-bold mb-4 text-center">Programming Languages</h3>
+                        <div class="flex flex-wrap justify-center gap-3">
+                            <span class="px-4 py-2 bg-zinc-800 rounded-full">JavaScript</span>
+                            <span class="px-4 py-2 bg-zinc-800 rounded-full">C#</span>
+                            <span class="px-4 py-2 bg-zinc-800 rounded-full">C++</span>
+                            <span class="px-4 py-2 bg-zinc-800 rounded-full">Python</span>
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <h3 class="text-xl font-bold mb-4 text-center">Web Technologies</h3>
+                        <div class="flex flex-wrap justify-center gap-3">
+                            <span class="px-4 py-2 bg-zinc-800 rounded-full">HTML</span>
+                            <span class="px-4 py-2 bg-zinc-800 rounded-full">CSS</span>
+                            <span class="px-4 py-2 bg-zinc-800 rounded-full">Astro</span>
+                            <span class="px-4 py-2 bg-zinc-800 rounded-full">Node.js</span>
+                            <span class="px-4 py-2 bg-zinc-800 rounded-full">Web3</span>
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <h3 class="text-xl font-bold mb-4 text-center">Other Skills</h3>
+                        <div class="flex flex-wrap justify-center gap-3">
+                            <span class="px-4 py-2 bg-zinc-800 rounded-full">3D Modeling</span>
+							<span class="px-4 py-2 bg-zinc-800 rounded-full">Computer Graphics</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
 </Layout>
