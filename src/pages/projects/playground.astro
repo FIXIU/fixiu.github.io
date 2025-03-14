@@ -1,0 +1,21 @@
+---
+import Layout from "../../layouts/Layout.astro";
+
+const hasValidCookie = Astro.cookies.has('playground_auth') && 
+                      Astro.cookies.get('playground_auth')?.value === 'true';
+
+const isAuthenticated = hasValidCookie;
+---
+
+<Layout title="Playground">
+	{isAuthenticated ? (
+		<div id="protected-content">
+			<h1 class="text-zinc-200">Playground</h1>
+			<p class="text-zinc-200">This is your protected content that only appears after password authentication.</p>
+		</div>
+	) : (
+		<div>
+			<h1 class="text-zinc-200">You are not authorized to use this page.</h1>
+		</div>
+	)}
+</Layout>
