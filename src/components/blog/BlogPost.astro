@@ -1,13 +1,12 @@
 ---
-const { title, date, content } = Astro.props;
+const { title, date, description, link, id } = Astro.props;
 ---
 
-<article class="blog-post">
-    <header>
-        <h2 class="text-2xl font-bold">{title}</h2>
-        <p class="text-sm text-gray-500">{date}</p>
-    </header>
-    <section class="mt-4">
-        <div class="prose" is:raw>{content}</div>
-    </section>
-</article>
+<a href={link}>
+    <div class="bg-zinc-800 p-8 rounded-lg">
+        <h2 class="text-3xl font-bold text-zinc-100">{title}</h2>
+        <p class="text-zinc-400">{date}</p>
+        <div class="text-zinc-200 mt-4">{description}</div>
+        <p class="text-white">{id}</p>
+    </div>
+</a>

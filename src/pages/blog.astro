@@ -18,10 +18,15 @@ const allPosts = await getCollection('blog');
                 <BlogPost 
                     title={post.data.title}
                     date={post.data.date}
-                    content={post.body}
+                    description={post.data.description}
+                    id={post.id}
+                    link={"/article?id=" + post.id}
                 />
             ))}
         </section>
+        <h1>The current URL is: {Astro.url}</h1>
+        <h1>The current URL pathname is: {Astro.url.pathname}</h1>
+        <h1>The current URL origin is: {Astro.url.origin}</h1>
 
         <footer class="mt-10">
             <a href="/blog" class="text-blue-500 hover:underline">Go to Blog Index</a>

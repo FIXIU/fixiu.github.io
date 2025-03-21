@@ -1,0 +1,27 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { getCollection } from 'astro:content';
+
+const { searchParams } = new URL(Astro.request.url);
+const id = searchParams.get('id');
+
+const allPosts = await getCollection('blog');
+const post = allPosts.find((p) => p.id == id);
+---
+
+<Layout>
+    <div class="px-5 py-8 max-w-7xl mx-auto min-h-[92vh]">
+        <header class="mb-10">
+            <h1 class="text-4xl font-bold text-zinc-100 mb-2">Blog</h1>
+            <p class="text-zinc-400">A collection of my blog posts</p>
+        </header>
+
+        <section class="flex flex-wrap justify-center gap-2 text-white">
+            {id}
+        </section>
+
+        <footer class="mt-10">
+            <a href="/blog" class="text-blue-500 hover:underline">Go to Blog Index</a>
+        </footer>
+    </div>
+</Layout>
