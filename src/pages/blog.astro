@@ -1,0 +1,35 @@
+---
+import Layout from '../layouts/Layout.astro';
+import BlogPost from '../components/blog/BlogPost.astro';
+import { getCollection } from 'astro:content';
+
+const allPosts = await getCollection('blog');
+---
+
+<Layout>
+    <div class="px-5 py-8 max-w-7xl mx-auto min-h-[92vh]">
+        <header class="mb-10">
+            <h1 class="text-4xl font-bold text-zinc-100 mb-2">Blog</h1>
+            <p class="text-zinc-400">A collection of my blog posts</p>
+        </header>
+
+        <section class="flex flex-wrap justify-center gap-2">
+            {allPosts.map(post => (
+                <BlogPost 
+                    title={post.data.title}
+                    date={post.data.date}
+                    description={post.data.description}
+                    id={post.id}
+                    link={"/article?id=" + post.id}
+                />
+            ))}
+        </section>
+        <h1>The current URL is: {Astro.url}</h1>
+        <h1>The current URL pathname is: {Astro.url.pathname}</h1>
+        <h1>The current URL origin is: {Astro.url.origin}</h1>
+
+        <footer class="mt-10">
+            <a href="/blog" class="text-blue-500 hover:underline">Go to Blog Index</a>
+        </footer>
+    </div>
+</Layout>
