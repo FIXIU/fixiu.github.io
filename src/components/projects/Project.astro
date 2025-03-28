@@ -17,6 +17,12 @@ if (flags === "WIP") {
     descColor = "text-zinc-600";
     anchor = "cursor-not-allowed pointer-events-none";
 }
+
+if (flags === "maintenance") {
+    containerFlags = "bg-zinc-900/40 border-zinc-500/20 active:border-blue-600/50 hover:border-zinc-600/50";
+    textColor = "text-zinc-300";
+    descColor = "text-zinc-500";
+}
 ---
 
 <a href={projectUrl} class={`no-underline w-full sm:flex-grow sm:basis-80 sm:max-w-md h-auto sm:h-64 font-sans m-1 sm:m-3 transition-all duration-300 ease-in-out ${anchor}`}>
@@ -30,6 +36,12 @@ if (flags === "WIP") {
             {flags === "WIP" && (
                 <div class="ml-auto flex items-center">
                     <span class="px-2 py-0.5 text-xs rounded-full bg-zinc-700/50 text-zinc-400">WIP</span>
+                </div>
+            )}
+            {flags === "maintenance" && (
+                <div class="ml-auto flex items-center">
+                    <span class="w-1.5 sm:w-2 h-1.5 sm:h-2 bg-yellow-500 rounded-full mr-1 sm:mr-2 animate-pulse"></span>
+                    <span class="text-xs text-zinc-400">Under Maintenance</span>
                 </div>
             )}
             {!flags && (
