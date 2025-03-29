@@ -1,21 +1,7 @@
----
-const { messageText } = Astro.props;
----
-
-<div class="m-auto text-base py-[18px] px-3 w-full md:px-5 lg:px-4 xl:px-5">
-    <div class="mx-auto flex flex-1 gap-4 text-base md:gap-5 lg:gap-6 md:max-w-3xl lg:max-w-[40rem] xl:max-w-[48rem]">
-        <div class="relative flex w-full min-w-0 flex-col">
-            <div class="flex-col gap-1 md:gap-3">
-                <div class="flex max-w-full flex-col flex-grow">
-                    <div class="min-h-8 text-message flex w-full flex-col items-end gap-2 whitespace-normal break-words text-start [.text-message+&]:mt-5">
-                        <div class="flex w-full flex-col gap-1 empty:hidden items-end rtl:items-start">
-                            <div class="relative max-w-[70%] rounded-3xl bg-[#303030] px-5 py-2.5">
-                                <slot />
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+<div class="chat-message mx-auto max-w-3xl lg:max-w-[90%] group relative mb-6 flex justify-end">
+  <div class="flex-1 space-y-2 overflow-hidden px-1 max-w-[80%] flex">
+    <div class="ml-auto text-zinc-50 prose prose-invert max-w-none overflow-hidden rounded-2xl bg-emerald-900/15 p-5 shadow-lg backdrop-blur-sm dark:prose-headings:text-zinc-100 dark:prose-p:text-zinc-300 dark:prose-strong:text-zinc-200 dark:prose-code:text-zinc-100 border border-emerald-800/30">
+      <slot />
     </div>
+  </div>
 </div>
