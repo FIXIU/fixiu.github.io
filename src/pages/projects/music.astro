@@ -1,97 +1,415 @@
 ---
+import { getCollection } from 'astro:content';
 import Layout from '../../layouts/Layout.astro';
-import Album from '../../components/projects/music/Album.astro';
+
+// Get all albums from the content collection
+const albums = await getCollection('albums');
+
+// Sort albums by rating (highest first)
+albums.sort((a, b) => (b.data.rating || 0) - (a.data.rating || 0));
 ---
 
-<Layout>
-    <div class="flex flex-col w-full">
-        <h1 class="font-sans text-zinc-200 text-5xl mt-4 ml-4 font-bold">Music Review</h1>
-        <section class="flex flex-row w-full justify-around p-2 flex-wrap h-[92.5vh] content-start overflow-auto scroll-pt-4 snap-y">
-            <Album 
-            imageSrc="https://is1-ssl.mzstatic.com/image/thumb/Music125/v4/0c/06/05/0c060581-6242-6a2a-a677-20170f2cf8da/886447710180.jpg/600x600bb.jpg" 
-            albumName="Igor"
-            artistName="Tyler, The Creator" 
-            releaseDate="May 17, 2019"
-            rating={10}
-            />
-            <Album 
-            imageSrc="https://is1-ssl.mzstatic.com/image/thumb/Music122/v4/ca/5b/c0/ca5bc0b3-d81d-cc6c-0d19-54b9eedb6dbd/12UMGIM52990.rgb.jpg/600x600bb.jpg"
-            albumName="good kid, m.A.A.d city"
-            artistName="Kendrick Lamar" 
-            releaseDate="October 22, 2012"
-            rating={9.9}
-            />
-            <Album 
-            imageSrc="https://is1-ssl.mzstatic.com/image/thumb/Music116/v4/41/36/cb/4136cbae-f6aa-b1fc-5452-6f5e153f28a4/886443853874.jpg/600x600bb.jpg"
-            albumName="Wolf"
-            artistName="Tyler, The Creator" 
-            releaseDate="April 2, 2013"
-            rating={9.8}
-            />
-            <Album 
-            imageSrc="https://is1-ssl.mzstatic.com/image/thumb/Music125/v4/65/47/0a/65470a4c-a70f-4a0b-f77b-3edb39e9097a/886449377039.jpg/600x600bb.jpg"
-            albumName="Call Me If You Get Lost"
-            artistName="Tyler, The Creator" 
-            releaseDate="June 25, 2021"
-            rating={9.8}
-            />
-            <Album 
-            imageSrc="https://is1-ssl.mzstatic.com/image/thumb/Music125/v4/fd/fd/8c/fdfd8c26-b8f9-4768-41d3-b24773250c65/886446605814.jpg/600x600bb.jpg" 
-            albumName="Flower Boy"
-            artistName="Tyler, The Creator" 
-            releaseDate="July 21, 2017"
-            rating={9.7}
-            />
-            <Album 
-            imageSrc="https://is1-ssl.mzstatic.com/image/thumb/Music221/v4/7d/bd/e9/7dbde97e-b97d-8cc3-0203-218b687408a9/196872555059.jpg/600x600bb.jpg" 
-            albumName="Chromakopia"
-            artistName="Tyler, The Creator" 
-            releaseDate="October 28, 2024"
-            rating={9.6}
-            />
-            <Album 
-            imageSrc="https://is1-ssl.mzstatic.com/image/thumb/Music125/v4/e8/13/50/e813500d-51cd-6c37-c405-53a668cbde97/886444072496.jpg/600x600bb.jpg" 
-            albumName="Illmatic"
-            artistName="Nas" 
-            releaseDate="April 19, 1994"
-            rating={9.5}
-            />
-            <Album 
-            imageSrc="https://is1-ssl.mzstatic.com/image/thumb/Music126/v4/ce/b6/93/ceb693e7-3318-48de-a20d-934aa54da27f/989237002226_Cover.jpg/600x600bb.jpg" 
-            albumName="Pinata"
-            artistName="Freddie Gibbs" 
-            releaseDate="March 18, 2014"
-            rating={9.4}
-            />
-            <Album 
-            imageSrc="https://is1-ssl.mzstatic.com/image/thumb/Music112/v4/0d/ae/61/0dae6140-d4af-d0df-eae0-3c92eb392a33/15UMGIM11922.rgb.jpg/600x600bb.jpg" 
-            albumName="To Pimp a Butterfly"
-            artistName="Kendrick Lamar" 
-            releaseDate="March 15, 2015"
-            rating={9.3}
-            />
-            <Album 
-            imageSrc="https://is1-ssl.mzstatic.com/image/thumb/Music115/v4/76/1b/36/761b368d-a267-4a99-9689-f5daf9bb1325/18UMGIM26291.rgb.jpg/600x600bb.jpg" 
-            albumName="Ye"
-            artistName="Kanye West" 
-            releaseDate="June 1, 2018"
-            rating={9}
-            />
-            <Album 
-            imageSrc="https://is1-ssl.mzstatic.com/image/thumb/Music112/v4/86/c9/bb/86c9bb30-fe3d-442e-33c1-c106c4d23705/17UMGIM88776.rgb.jpg/600x600bb.jpg" 
-            albumName="DAMN."
-            artistName="Kendrick Lamar" 
-            releaseDate="April 14, 2017"
-            rating={9}
-            />
-            <Album 
-            imageSrc="https://is1-ssl.mzstatic.com/image/thumb/Music115/v4/fb/5c/f2/fb5cf235-2ae9-34c3-1ddb-ef896fb14175/16UMGIM58688.rgb.jpg/600x600bb.jpg" 
-            albumName="808s & Heartbreak"
-            artistName="Kanye West" 
-            releaseDate="November 24, 2008"
-            rating={8}
-            />
-            
-        </section>
+<Layout title="My Album Collection">
+  <main>
+    <div class="album-explorer">
+      <!-- Hidden scroll sections for navigation tracking -->
+      <div class="scroll-tracker">
+        {albums.map((album, index) => (
+          <div class="scroll-section" id={`album-${index}`} data-album-index={index}></div>
+        ))}
+      </div>
+      
+      <div class="left-0 h-full flex flex-col items-center justify-center overflow-hidden w-[200px]">
+        <div class="album-carousel h-full flex flex-col items-center justify-center">
+          {albums.map((album, index) => (
+            <div class="album-thumbnail" data-album-index={index}>
+              {album.data.imageUrl && (
+                <img src={album.data.imageUrl} alt={`${album.data.title} by ${album.data.artist}`} />
+              )}
+              <span class="album-title text-zinc-100">{album.data.title}</span>
+            </div>
+          ))}
+        </div>
+      </div>
+      
+      <!-- Fixed album info panel -->
+      <div class="album-info-panel">
+        <div class="album-card">
+          <div class="w-[300px] h-[300px] mb-6 relative overflow-hidden rounded-lg">
+            <img id="active-album-image" 
+                 src={albums[0].data.imageUrl} 
+                 alt={`${albums[0].data.title} by ${albums[0].data.artist}`}
+                 class="w-full h-full object-cover transition-all duration-500 ease-in-out" />
+          </div>
+          <div class="text-center w-full">
+            <h2 id="active-album-title">{albums[0].data.title}</h2>
+            <p id="active-album-artist" class="artist">{albums[0].data.artist}</p>
+            <p id="active-album-rating" class="rating">
+              {albums[0].data.rating ? `Rating: ${albums[0].data.rating}/10` : ''}
+            </p>
+            {albums[0].data.spotifyLink && (
+              <a id="active-album-spotify" 
+                 href={albums[0].data.spotifyLink} 
+                 target="_blank" 
+                 rel="noopener noreferrer" 
+                 class="inline-block bg-[#1DB954] text-white py-2.5 px-5 rounded-full no-underline mt-4 font-bold">
+                Listen on Spotify
+              </a>
+            )}
+          </div>
+        </div>
+      </div>
     </div>
+  </main>
 </Layout>
+
+<style>
+  main {
+    margin: 0 auto;
+    padding: 1rem;
+    overflow-x: hidden;
+  }
+
+  h1 {
+    margin-bottom: 2rem;
+  }
+
+  .album-explorer {
+    display: flex;
+    position: relative;
+    height: calc(100vh - 8rem);
+  }
+
+  /* Hidden scroll sections for navigation */
+  .scroll-tracker {
+    position: absolute;
+    width: 1px;
+    height: 100%;
+    overflow-y: auto;
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  .scroll-section {
+    height: 100vh;
+  }
+
+  /* Album carousel styling */
+  .album-carousel {
+    position: fixed;
+    left: 0;
+    width: 200px;
+    perspective: 1000px;
+    z-index: 10;
+  }
+
+  .album-thumbnail {
+    cursor: pointer;
+    position: absolute;
+    left: -40px;
+    width: 140px;
+    transform: translateX(-10px) translateZ(-100px) rotateY(45deg);
+    transition: all 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+    transform-origin: center left;
+    opacity: 0.4;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .album-thumbnail img {
+    width: 100%;
+    aspect-ratio: 1;
+    object-fit: cover;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    margin-bottom: 0.5rem;
+    transition: all 0.5s ease;
+  }
+
+  .album-thumbnail.active img {
+    box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+    transform: scale(1.1);
+  }
+
+  .album-title {
+    font-size: 0.8rem;
+    text-align: center;
+    display: block;
+    opacity: 0;
+    transform: translateY(10px);
+    transition: all 0.4s ease;
+    width: 120px;
+    text-align: center;
+  }
+
+  /* Album info panel styling */
+  .album-info-panel {
+    margin-left: 250px;
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .album-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #f9f9f9;
+    border-radius: 12px;
+    padding: 2rem;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    width: 100%;
+    max-width: 500px;
+    transition: all 0.5s ease;
+  }
+
+  @media (max-width: 768px) {
+    .album-explorer {
+      flex-direction: column;
+      height: auto;
+    }
+
+    .album-carousel {
+      position: relative;
+      left: 0;
+      top: 0;
+      transform: none;
+      width: 100%;
+      height: 180px;
+      margin-bottom: 2rem;
+      display: flex;
+      overflow-x: auto;
+      padding: 1rem 0;
+    }
+
+    .album-thumbnail {
+      position: relative;
+      margin-right: 1rem;
+      transform: none !important;
+      opacity: 0.7;
+      left: 0;
+      width: 120px;
+    }
+
+    .album-thumbnail.active {
+      opacity: 1;
+    }
+
+    .album-info-panel {
+      margin-left: 0;
+    }
+
+    .album-title {
+      opacity: 1;
+      transform: none;
+    }
+  }
+</style>
+
+<script is:inline>
+  document.addEventListener('DOMContentLoaded', () => {
+    const thumbnails = document.querySelectorAll('.album-thumbnail');
+    const scrollSections = document.querySelectorAll('.scroll-section');
+    const scrollTracker = document.querySelector('.scroll-tracker');
+    const totalAlbums = thumbnails.length;
+    
+    // Album info elements
+    const activeAlbumImage = document.getElementById('active-album-image');
+    const activeAlbumTitle = document.getElementById('active-album-title');
+    const activeAlbumArtist = document.getElementById('active-album-artist');
+    const activeAlbumRating = document.getElementById('active-album-rating');
+    const activeAlbumSpotify = document.getElementById('active-album-spotify');
+    
+    // Album data stored for easy access
+    const albumData = [];
+    thumbnails.forEach((thumbnail, index) => {
+      const img = thumbnail.querySelector('img');
+      const title = thumbnail.querySelector('.album-title').textContent;
+      
+      // Extract artist and rating from the DOM or data attributes
+      // This is a simplified approach - you might need to adjust this based on your data structure
+      const albumSection = document.querySelector(`#album-${index}`);
+      const dataAttributes = thumbnail.dataset;
+      
+      albumData.push({
+        index: index,
+        imageUrl: img ? img.src : '',
+        title: title,
+        artist: dataAttributes.artist || '',
+        rating: dataAttributes.rating || '',
+        spotifyLink: dataAttributes.spotifyLink || ''
+      });
+    });
+    
+    // Function to update the carousel positions
+    function updateCarousel(activeIndex) {
+      thumbnails.forEach((thumbnail, index) => {
+        // Remove all position classes
+        thumbnail.classList.remove('active', 'prev', 'next', 'far-prev', 'far-next');
+        
+        // Calculate the relative position
+        const distance = index - activeIndex;
+        const absDistance = Math.abs(distance);
+        
+        // Calculate values that change with distance
+        const scale = Math.max(0.5, 1 - (absDistance * 0.15));
+        const opacity = Math.max(0.1, 1 - (absDistance * 0.25));
+        const leftOffset = 60 - (absDistance * 20);
+        const zDepth = -50 * absDistance;
+        thumbnail.style.zIndex = Math.max(1, 10 - absDistance);
+        
+        // Set the appropriate class based on distance from active
+        if (distance === 0) {
+          thumbnail.classList.add('active');
+          thumbnail.style.transform = 'translateX(80px) translateZ(0) rotateY(0) scale(1.2)';
+          thumbnail.style.opacity = '1';
+          thumbnail.style.zIndex = '12';
+        } else if (distance === -1) {
+          thumbnail.classList.add('prev');
+          thumbnail.style.transform = `translateX(${leftOffset}px) translateY(-100px) translateZ(-50px) rotateY(15deg) rotateZ(${distance * 5}deg) scale(${scale})`;
+          thumbnail.style.opacity = opacity;
+          thumbnail.style.zIndex = '9';
+        } else if (distance === 1) {
+          thumbnail.classList.add('next');
+          thumbnail.style.transform = `translateX(${leftOffset}px) translateY(100px) translateZ(-50px) rotateY(15deg) rotateZ(${distance * 5}deg) scale(${scale})`;
+          thumbnail.style.opacity = opacity;
+          thumbnail.style.zIndex = '9';
+        } else if (distance < -1) { 
+          // Far previous (top)
+          thumbnail.classList.add('far-prev');
+          thumbnail.style.transform = `translateX(${leftOffset - 20}px) translateY(-${Math.abs(distance) * 80}px) translateZ(${zDepth}px) rotateY(30deg) rotateZ(${distance * 5}deg) scale(${scale})`;
+          thumbnail.style.opacity = opacity;
+        } else if (distance > 1) {
+          // Far next (bottom)
+          thumbnail.classList.add('far-next');
+          thumbnail.style.transform = `translateX(${leftOffset - 20}px) translateY(${distance * 80}px) translateZ(${zDepth}px) rotateY(30deg) rotateZ(${distance * 5}deg) scale(${scale})`;
+          thumbnail.style.opacity = opacity;
+        }
+        
+        // Remove the top inline style since we're handling it in the transform now
+        thumbnail.style.top = '';
+      });
+      
+      // Update the album info panel with the active album data
+      updateAlbumInfo(activeIndex);
+    }
+    
+    // Function to update the album info panel
+    function updateAlbumInfo(index) {
+      // Get album data from the server-rendered HTML
+      const albumSection = document.querySelector(`[data-album-index="${index}"]`);
+      if (!albumSection) return;
+      
+      // Get the image, title, artist, rating, and spotify link from the active thumbnail
+      const activeThumbnail = document.querySelector(`.album-thumbnail[data-album-index="${index}"]`);
+      if (!activeThumbnail) return;
+      
+      const albumImg = activeThumbnail.querySelector('img');
+      if (albumImg && activeAlbumImage) {
+        activeAlbumImage.src = albumImg.src;
+        activeAlbumImage.alt = albumImg.alt;
+      }
+      
+      // Update title from the thumbnail
+      const albumTitle = activeThumbnail.querySelector('.album-title');
+      if (albumTitle && activeAlbumTitle) {
+        activeAlbumTitle.textContent = albumTitle.textContent;
+      }
+      
+      // The rest of the data may need to come from data attributes or your Astro collection
+      // This is where you'd need to augment the HTML with data attributes or use a data structure
+      
+      // For this example, I'm assuming you've added data attributes to the thumbnails
+      if (activeAlbumArtist) {
+        activeAlbumArtist.textContent = activeThumbnail.dataset.artist || '';
+      }
+      
+      if (activeAlbumRating) {
+        const rating = activeThumbnail.dataset.rating;
+        activeAlbumRating.textContent = rating ? `Rating: ${rating}/10` : '';
+      }
+      
+      if (activeAlbumSpotify) {
+        const spotifyLink = activeThumbnail.dataset.spotifyLink;
+        if (spotifyLink) {
+          activeAlbumSpotify.href = spotifyLink;
+          activeAlbumSpotify.style.display = 'inline-block';
+        } else {
+          activeAlbumSpotify.style.display = 'none';
+        }
+      }
+    }
+    
+    // Set first album as active by default
+    if (thumbnails.length > 0) {
+      updateCarousel(0);
+    }
+
+    // Add click handlers to thumbnails
+    thumbnails.forEach((thumbnail, index) => {
+      thumbnail.addEventListener('click', () => {
+        // Update carousel positions
+        updateCarousel(index);
+        
+        // Scroll to corresponding section for navigation tracking
+        const targetSection = document.querySelector(`#album-${index}`);
+        if (targetSection) {
+          scrollTracker.scrollTo({
+            top: targetSection.offsetTop,
+            behavior: 'smooth'
+          });
+        }
+      });
+    });
+
+    // Track scroll position to highlight active album
+    scrollTracker.addEventListener('scroll', () => {
+      const scrollPosition = scrollTracker.scrollTop;
+      
+      // Find the current scroll section
+      for (let i = 0; i < scrollSections.length; i++) {
+        const section = scrollSections[i];
+        const sectionTop = section.offsetTop;
+        const sectionBottom = sectionTop + section.offsetHeight;
+        
+        if (scrollPosition >= sectionTop && scrollPosition < sectionBottom) {
+          // We found our visible section
+          updateCarousel(i);
+          break;
+        }
+      }
+    });
+    
+    // Allow mousewheel scrolling to navigate between albums
+    document.addEventListener('wheel', (e) => {
+      e.preventDefault();
+      
+      // Find current active album
+      const activeIndex = parseInt(document.querySelector('.album-thumbnail.active').dataset.albumIndex);
+      
+      // Calculate next index based on scroll direction
+      let nextIndex = activeIndex;
+      if (e.deltaY > 0 && activeIndex < totalAlbums - 1) {
+        nextIndex = activeIndex + 1;
+      } else if (e.deltaY < 0 && activeIndex > 0) {
+        nextIndex = activeIndex - 1;
+      }
+      
+      // If index changed, update the carousel
+      if (nextIndex !== activeIndex) {
+        updateCarousel(nextIndex);
+        
+        // Scroll to corresponding section for tracking
+        const targetSection = document.querySelector(`#album-${nextIndex}`);
+        if (targetSection) {
+          scrollTracker.scrollTo({
+            top: targetSection.offsetTop,
+            behavior: 'smooth'
+          });
+        }
+      }
+    }, { passive: false });
+  });
+</script>
