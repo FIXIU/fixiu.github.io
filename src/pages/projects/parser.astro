@@ -1,0 +1,251 @@
+---
+import Layout from '../../layouts/Layout.astro';
+---
+
+<Layout>
+    <main class="bg-zinc-900 min-h-screen text-white px-4 py-8">
+        <section class="max-w-4xl mx-auto">
+            <h1 class="text-3xl font-bold mb-6">Speedtest Results Parser</h1>
+            
+            <div class="bg-zinc-800 p-6 rounded-lg mb-8">
+                <h2 class="text-xl font-semibold mb-3">Upload Speedtest File</h2>
+                <p class="text-zinc-300 mb-4">Upload a JSONL file containing speedtest results to visualize the data.</p>
+                
+                <div class="border-2 border-dashed border-zinc-600 rounded-lg p-8 text-center" id="dropArea">
+                    <input type="file" id="fileInput" class="hidden" accept=".jsonl" />
+                    <label for="fileInput" class="cursor-pointer">
+                        <div class="flex flex-col items-center">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 text-zinc-400 mb-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
+                            </svg>
+                            <span class="text-zinc-300 font-medium">Drag and drop your file here or click to browse</span>
+                            <span class="text-zinc-500 text-sm mt-1">Supports .jsonl files</span>
+                        </div>
+                    </label>
+                </div>
+            </div>
+            
+            <div id="results" class="hidden">
+                <div class="bg-zinc-800 p-6 rounded-lg mb-8">
+                    <h2 class="text-xl font-semibold mb-4">Test Information</h2>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div class="bg-zinc-700 p-4 rounded-lg">
+                            <h3 class="text-lg font-medium mb-2">Connection Details</h3>
+                            <dl class="grid grid-cols-2 gap-2">
+                                <dt class="text-zinc-400">ISP:</dt>
+                                <dd id="isp" class="font-medium">-</dd>
+                                <dt class="text-zinc-400">Internal IP:</dt>
+                                <dd id="internalIp" class="font-medium">-</dd>
+                                <dt class="text-zinc-400">External IP:</dt>
+                                <dd id="externalIp" class="font-medium">-</dd>
+                                <dt class="text-zinc-400">Test Date:</dt>
+                                <dd id="testDate" class="font-medium">-</dd>
+                            </dl>
+                        </div>
+                        <div class="bg-zinc-700 p-4 rounded-lg">
+                            <h3 class="text-lg font-medium mb-2">Server Details</h3>
+                            <dl class="grid grid-cols-2 gap-2">
+                                <dt class="text-zinc-400">Name:</dt>
+                                <dd id="serverName" class="font-medium">-</dd>
+                                <dt class="text-zinc-400">Location:</dt>
+                                <dd id="serverLocation" class="font-medium">-</dd>
+                                <dt class="text-zinc-400">Country:</dt>
+                                <dd id="serverCountry" class="font-medium">-</dd>
+                                <dt class="text-zinc-400">Host:</dt>
+                                <dd id="serverHost" class="font-medium">-</dd>
+                            </dl>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+                    <div class="bg-zinc-800 p-6 rounded-lg">
+                        <h3 class="text-xl font-semibold mb-2">Download</h3>
+                        <p id="downloadSpeed" class="text-4xl font-bold text-blue-400">-</p>
+                        <p class="text-zinc-400 text-sm">Mbps</p>
+                    </div>
+                    <div class="bg-zinc-800 p-6 rounded-lg">
+                        <h3 class="text-xl font-semibold mb-2">Upload</h3>
+                        <p id="uploadSpeed" class="text-4xl font-bold text-green-400">-</p>
+                        <p class="text-zinc-400 text-sm">Mbps</p>
+                    </div>
+                    <div class="bg-zinc-800 p-6 rounded-lg">
+                        <h3 class="text-xl font-semibold mb-2">Ping</h3>
+                        <p id="pingLatency" class="text-4xl font-bold text-yellow-400">-</p>
+                        <p class="text-zinc-400 text-sm">ms</p>
+                    </div>
+                </div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+                    <div class="bg-zinc-800 p-6 rounded-lg">
+                        <h3 class="text-xl font-semibold mb-4">Latency Details</h3>
+                        <div class="grid grid-cols-2 gap-4">
+                            <div>
+                                <p class="text-zinc-400 mb-1">Jitter</p>
+                                <p id="jitter" class="text-2xl font-bold">-</p>
+                                <p class="text-zinc-500 text-xs">ms</p>
+                            </div>
+                            <div>
+                                <p class="text-zinc-400 mb-1">Low</p>
+                                <p id="pingLow" class="text-2xl font-bold">-</p>
+                                <p class="text-zinc-500 text-xs">ms</p>
+                            </div>
+                            <div>
+                                <p class="text-zinc-400 mb-1">High</p>
+                                <p id="pingHigh" class="text-2xl font-bold">-</p>
+                                <p class="text-zinc-500 text-xs">ms</p>
+                            </div>
+                            <div>
+                                <p class="text-zinc-400 mb-1">Packet Loss</p>
+                                <p id="packetLoss" class="text-2xl font-bold">-</p>
+                                <p class="text-zinc-500 text-xs">%</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bg-zinc-800 p-6 rounded-lg">
+                        <h3 class="text-xl font-semibold mb-4">Speed Details</h3>
+                        <div class="grid grid-cols-2 gap-4">
+                            <div>
+                                <p class="text-zinc-400 mb-1">Download Bytes</p>
+                                <p id="downloadBytes" class="text-2xl font-bold">-</p>
+                                <p class="text-zinc-500 text-xs">MB</p>
+                            </div>
+                            <div>
+                                <p class="text-zinc-400 mb-1">Upload Bytes</p>
+                                <p id="uploadBytes" class="text-2xl font-bold">-</p>
+                                <p class="text-zinc-500 text-xs">MB</p>
+                            </div>
+                            <div>
+                                <p class="text-zinc-400 mb-1">Download Time</p>
+                                <p id="downloadTime" class="text-2xl font-bold">-</p>
+                                <p class="text-zinc-500 text-xs">seconds</p>
+                            </div>
+                            <div>
+                                <p class="text-zinc-400 mb-1">Upload Time</p>
+                                <p id="uploadTime" class="text-2xl font-bold">-</p>
+                                <p class="text-zinc-500 text-xs">seconds</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="bg-zinc-800 p-6 rounded-lg mb-8">
+                    <h3 class="text-xl font-semibold mb-4">Speedtest Result URL</h3>
+                    <a id="resultUrl" href="#" target="_blank" class="text-blue-400 underline hover:text-blue-300">-</a>
+                </div>
+            </div>
+        </section>
+    </main>
+</Layout>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        // Cast fileInput as HTMLInputElement to access files property
+        const fileInput = document.getElementById('fileInput') as HTMLInputElement;
+        const dropArea = document.getElementById('dropArea');
+        const resultsSection = document.getElementById('results');
+        
+        // Handle file selection
+        fileInput.addEventListener('change', handleFileSelect);
+        
+        // Handle drag and drop
+        dropArea.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            dropArea.classList.add('border-blue-500');
+        });
+        
+        dropArea.addEventListener('dragleave', () => {
+            dropArea.classList.remove('border-blue-500');
+        });
+        
+        dropArea.addEventListener('drop', (e) => {
+            e.preventDefault();
+            dropArea.classList.remove('border-blue-500');
+            
+            if (e.dataTransfer.files.length) {
+                fileInput.files = e.dataTransfer.files;
+                handleFileSelect();
+            }
+        });
+        
+        function handleFileSelect() {
+            const file = fileInput.files[0];
+            if (!file) return;
+            
+            const reader = new FileReader();
+            reader.onload = (e) => parseSpeedtestFile(e.target.result);
+            reader.readAsText(file);
+        }
+        
+        function parseSpeedtestFile(content) {
+            try {
+                // Split the file content by new lines and parse each line as JSON
+                const lines = content.split('\n').filter(line => line.trim().length > 0);
+                const data = lines.map(line => JSON.parse(line));
+                
+                // Find the result object which contains the final test results
+                const resultObj = data.find(item => item.type === 'result');
+                const testStartObj = data.find(item => item.type === 'testStart');
+                
+                if (resultObj) {
+                    displayResults(resultObj, testStartObj);
+                    resultsSection.classList.remove('hidden');
+                } else {
+                    alert('Could not find results in the provided file.');
+                }
+            } catch (error) {
+                console.error('Error parsing file:', error);
+                alert('Error parsing the file. Please ensure it is a valid speedtest JSONL file.');
+            }
+        }
+        
+        function displayResults(resultObj, testStartObj) {
+            // Format date
+            const testDate = new Date(testStartObj?.timestamp || resultObj.timestamp);
+            const formattedDate = testDate.toLocaleString();
+            
+            // Convert bytes to MB
+            const downloadMB = (resultObj.download.bytes / (1024 * 1024)).toFixed(2);
+            const uploadMB = (resultObj.upload.bytes / (1024 * 1024)).toFixed(2);
+            
+            // Convert bandwidth to Mbps (bits/s to Mbps)
+            const downloadMbps = (resultObj.download.bandwidth * 8 / 1000000).toFixed(2);
+            const uploadMbps = (resultObj.upload.bandwidth * 8 / 1000000).toFixed(2);
+            
+            // Fill in the data
+            document.getElementById('isp').textContent = resultObj.isp;
+            document.getElementById('internalIp').textContent = resultObj.interface.internalIp;
+            document.getElementById('externalIp').textContent = resultObj.interface.externalIp;
+            document.getElementById('testDate').textContent = formattedDate;
+            
+            document.getElementById('serverName').textContent = resultObj.server.name;
+            document.getElementById('serverLocation').textContent = resultObj.server.location;
+            document.getElementById('serverCountry').textContent = resultObj.server.country;
+            document.getElementById('serverHost').textContent = resultObj.server.host;
+            
+            document.getElementById('downloadSpeed').textContent = downloadMbps;
+            document.getElementById('uploadSpeed').textContent = uploadMbps;
+            document.getElementById('pingLatency').textContent = resultObj.ping.latency.toFixed(2);
+            
+            document.getElementById('jitter').textContent = resultObj.ping.jitter.toFixed(2);
+            document.getElementById('pingLow').textContent = resultObj.ping.low.toFixed(2);
+            document.getElementById('pingHigh').textContent = resultObj.ping.high.toFixed(2);
+            document.getElementById('packetLoss').textContent = resultObj.packetLoss || '0';
+            
+            document.getElementById('downloadBytes').textContent = downloadMB;
+            document.getElementById('uploadBytes').textContent = uploadMB;
+            document.getElementById('downloadTime').textContent = (resultObj.download.elapsed / 1000).toFixed(2);
+            document.getElementById('uploadTime').textContent = (resultObj.upload.elapsed / 1000).toFixed(2);
+            
+            // Cast resultUrl as HTMLAnchorElement to access href property
+            const resultUrl = document.getElementById('resultUrl') as HTMLAnchorElement;
+            if (resultObj.result && resultObj.result.url) {
+                resultUrl.textContent = resultObj.result.url;
+                resultUrl.href = resultObj.result.url;
+            } else {
+                resultUrl.textContent = 'Not available';
+                resultUrl.removeAttribute('href');
+            }
+        }
+    });
+</script>
