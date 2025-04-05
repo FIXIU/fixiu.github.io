@@ -167,48 +167,87 @@ albums.sort((a, b) => (b.data.rating || 0) - (a.data.rating || 0));
 
   @media (max-width: 768px) {
     .album-explorer {
-      flex-direction: column;
-      height: auto;
+      flex-direction: column-reverse;
+      height: 100vh;
+      position: relative;
     }
 
     .album-carousel {
-      position: relative;
+      position: fixed;
+      bottom: 0;
       left: 0;
-      top: 0;
-      transform: none;
       width: 100%;
       height: 180px;
-      margin-bottom: 2rem;
       display: flex;
-      overflow-x: auto;
+      justify-content: center;
+      align-items: center;
+      perspective: 1000px;
       padding: 1rem 0;
+      background: rgba(0,0,0,0.8);
+      z-index: 10;
+      overflow-x: hidden;
+      /* Add these properties for better performance */
+      will-change: transform;
+      -webkit-overflow-scrolling: touch;
     }
 
     .album-thumbnail {
-      position: relative;
-      margin-right: 1rem;
-      transform: none !important;
-      opacity: 0.7;
-      left: 0;
+      position: absolute;
+      margin-right: 0;
+      left: 50%;
       width: 120px;
+      transform-origin: center center;
+      transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+      /* Add will-change for better performance */
+      will-change: transform, opacity;
+      /* Force hardware acceleration */
+      -webkit-backface-visibility: hidden;
+      backface-visibility: hidden;
     }
 
     .album-thumbnail.active {
       opacity: 1;
+      transform: translateX(-50%) translateZ(0) scale(1.2) !important;
+      z-index: 12;
     }
 
     .album-info-panel {
-      margin-left: 0;
+      margin: 0 auto;
+      padding: 2rem 1rem 200px 1rem;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100%;
+      width: 100%;
     }
 
     .album-title {
+      opacity: 0;
+      transform: translateY(10px);
+      transition: all 0.4s ease;
+    }
+
+    .album-thumbnail.active .album-title {
       opacity: 1;
-      transform: none;
+      transform: translateY(0);
     }
   }
 </style>
 
 <script is:inline>
+  // Add passive event listener support detection for older browsers
+  let passiveSupported = false;
+  try {
+    const options = {
+      get passive() { passiveSupported = true; return false; }
+    };
+    window.addEventListener("test", null, options);
+    window.removeEventListener("test", null, options);
+  } catch(err) {
+    passiveSupported = false;
+  }
+  
+  // Preload album images to prevent stuttering during first interactions
   document.addEventListener('DOMContentLoaded', () => {
     const thumbnails = document.querySelectorAll('.album-thumbnail');
     const scrollSections = document.querySelectorAll('.scroll-section');
@@ -411,5 +450,195 @@ albums.sort((a, b) => (b.data.rating || 0) - (a.data.rating || 0));
         }
       }
     }, { passive: false });
+
+    // Mobile-specific adjustments
+    const isMobile = window.matchMedia('(max-width: 768px)').matches;
+    let touchStartX = 0;
+    let touchEndX = 0;
+
+    if (isMobile) {
+      // Better FPS tracking for diagnosing performance
+      let lastTouch = 0;
+      let isSwiping = false;
+      let pendingUpdate = false;
+      let targetIndex = 0;
+      
+      // Replace the existing mobile carousel update function
+      function updateMobileCarousel(activeIndex) {
+        // Schedule visual updates with requestAnimationFrame for smoother animations
+        requestAnimationFrame(() => {
+          thumbnails.forEach((thumbnail, index) => {
+            thumbnail.classList.remove('active', 'prev', 'next', 'far-prev', 'far-next');
+            
+            const distance = index - activeIndex;
+            const absDistance = Math.abs(distance);
+            
+            // Calculate values that change with distance
+            const scale = Math.max(0.5, 1 - (absDistance * 0.15));
+            const opacity = Math.max(0.1, 1 - (absDistance * 0.25));
+            const zDepth = -100 * absDistance;
+            
+            // Simplified z-index assignment to reduce style calculations
+            thumbnail.style.zIndex = distance === 0 ? 12 : (absDistance < 2 ? 9 : Math.max(1, 8 - absDistance));
+            
+            // Apply appropriate transforms based on position
+            if (distance === 0) {
+              thumbnail.classList.add('active');
+              thumbnail.style.transform = 'translateX(-50%) translateZ(0) scale(1.2)';
+              thumbnail.style.opacity = '1';
+            } else if (distance === -1) {
+              thumbnail.classList.add('prev');
+              thumbnail.style.transform = `translateX(calc(-50% - ${100}px)) translateZ(${zDepth}px) rotateY(${distance * -15}deg) scale(${scale})`;
+              thumbnail.style.opacity = opacity;
+            } else if (distance === 1) {
+              thumbnail.classList.add('next');
+              thumbnail.style.transform = `translateX(calc(-50% + ${100}px)) translateZ(${zDepth}px) rotateY(${distance * -15}deg) scale(${scale})`;
+              thumbnail.style.opacity = opacity;
+            } else if (distance < -1) {
+              thumbnail.classList.add('far-prev');
+              // Simplify transform to improve performance
+              thumbnail.style.transform = `translateX(calc(-50% - ${150 + absDistance * 30}px)) translateZ(${zDepth}px) rotateY(${-10}deg) scale(${scale * 0.8})`;
+              thumbnail.style.opacity = opacity * 0.7;
+            } else if (distance > 1) {
+              thumbnail.classList.add('far-next');
+              // Simplify transform to improve performance
+              thumbnail.style.transform = `translateX(calc(-50% + ${150 + absDistance * 30}px)) translateZ(${zDepth}px) rotateY(${10}deg) scale(${scale * 0.8})`;
+              thumbnail.style.opacity = opacity * 0.7;
+            }
+          });
+          
+          // Only update album info when animation is complete to reduce UI jank
+          updateAlbumInfo(activeIndex);
+          pendingUpdate = false;
+        });
+      }
+      
+      // Override the updateCarousel function for mobile with throttling
+      updateCarousel = (newIndex) => {
+        if (!pendingUpdate) {
+          pendingUpdate = true;
+          targetIndex = newIndex;
+          updateMobileCarousel(newIndex);
+        }
+      };
+      
+      // Set first album as active
+      if (thumbnails.length > 0) {
+        updateMobileCarousel(0);
+      }
+      
+      // Optimized touch event listeners with better performance
+      const carousel = document.querySelector('.album-carousel');
+      
+      carousel.addEventListener('touchstart', (e) => {
+        touchStartX = e.changedTouches[0].screenX;
+        lastTouch = Date.now();
+        isSwiping = true;
+        
+        // Pause transitions during active swipe for more responsive feel
+        thumbnails.forEach(thumbnail => {
+          thumbnail.style.transition = 'none';
+        });
+      }, {passive: true});
+      
+      carousel.addEventListener('touchmove', (e) => {
+        if (!isSwiping) return;
+        
+        const currentTouch = e.changedTouches[0].screenX;
+        const diff = currentTouch - touchStartX;
+        
+        // Only process every 16ms (60fps) to prevent too many updates
+        if (Date.now() - lastTouch < 16) return;
+        lastTouch = Date.now();
+        
+        // Get current active index
+        const activeIndex = parseInt(document.querySelector('.album-thumbnail.active').dataset.albumIndex);
+        
+        // Create a temporary visual effect during swipe for feedback
+        if (Math.abs(diff) > 20) {
+          thumbnails.forEach((thumbnail, index) => {
+            const distance = index - activeIndex;
+            if (distance === 0) {
+              // Move the active thumbnail slightly in the direction of the swipe
+              const moveX = diff * 0.1;
+              thumbnail.style.transform = `translateX(calc(-50% + ${moveX}px)) translateZ(0) scale(1.2)`;
+            }
+          });
+        }
+      }, {passive: true});
+      
+      carousel.addEventListener('touchend', (e) => {
+        isSwiping = false;
+        touchEndX = e.changedTouches[0].screenX;
+        
+        // Restore transitions
+        thumbnails.forEach(thumbnail => {
+          thumbnail.style.transition = 'all 0.4s cubic-bezier(0.23, 1, 0.32, 1)';
+        });
+        
+        // Find current active album
+        const activeIndex = parseInt(document.querySelector('.album-thumbnail.active').dataset.albumIndex);
+        
+        // Calculate the swipe distance and velocity
+        const swipeDistance = touchEndX - touchStartX;
+        const swipeTime = Date.now() - lastTouch;
+        const swipeVelocity = Math.abs(swipeDistance) / swipeTime;
+        const MIN_SWIPE_DISTANCE = 30; // Reduced threshold for better responsiveness
+        
+        // Calculate next index based on swipe direction
+        let nextIndex = activeIndex;
+        
+        // Adjust sensitivity based on swipe velocity
+        const isQuickSwipe = swipeVelocity > 0.5;
+        const threshold = isQuickSwipe ? MIN_SWIPE_DISTANCE * 0.7 : MIN_SWIPE_DISTANCE;
+        
+        if (swipeDistance < -threshold && activeIndex < totalAlbums - 1) {
+          // Swipe left - go to next album
+          nextIndex = activeIndex + 1;
+        } else if (swipeDistance > threshold && activeIndex > 0) {
+          // Swipe right - go to previous album
+          nextIndex = activeIndex - 1;
+        }
+        
+        // If index changed, update the carousel
+        if (nextIndex !== activeIndex) {
+          updateCarousel(nextIndex);
+          
+          // Scroll to corresponding section for tracking
+          const targetSection = document.querySelector(`#album-${nextIndex}`);
+          if (targetSection) {
+            scrollTracker.scrollTo({
+              top: targetSection.offsetTop,
+              behavior: 'smooth'
+            });
+          }
+        } else {
+          // If we didn't change albums, ensure we reset the position
+          updateCarousel(activeIndex);
+        }
+      }, {passive: true});
+      
+      // Optimization for clicks on thumbnails in mobile
+      thumbnails.forEach((thumbnail, index) => {
+        thumbnail.addEventListener('click', (e) => {
+          e.preventDefault();
+          
+          // Immediate visual feedback
+          thumbnail.style.transform = 'translateX(-50%) translateZ(0) scale(1.3)';
+          setTimeout(() => {
+            updateCarousel(index);
+            
+            // Scroll to corresponding section for tracking
+            const targetSection = document.querySelector(`#album-${index}`);
+            if (targetSection) {
+              scrollTracker.scrollTo({
+                top: targetSection.offsetTop,
+                behavior: 'smooth'
+              });
+            }
+          }, 50);
+        });
+      });
+    }
   });
 </script>
