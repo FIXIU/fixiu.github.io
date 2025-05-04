@@ -1,0 +1,151 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import Title from "../../components/projects/testgrounds/Title.astro";
+---
+
+<Layout>
+    <div>
+        <section class="w-full flex items-start justify-start col">
+            <div class="flex row items-end gap-1">
+                <h1 class="text-6xl font-bold">TestGrounds...</h1>
+                <p>just a bunch of stray ideas</p>
+            </div>
+        </section>
+        <section>
+            <div>
+                <Title>Canvas</Title>
+                <canvas width="500" height="500" class="bg-slate-900"></canvas>
+                <input type="range" min="2" max="10" value="2" id="scaleFactor" step="1" class="w-full mt-4" />
+                <button onclick="drawGrid(grid2D);">main</button>
+                <button onclick="drawGrid(upscaleGrid(grid2D));">upscaled</button>
+            </div>
+        </section>
+    </div>
+</Layout>
+
+<script is:inline>
+    const canvas = document.querySelector("canvas");
+    const ctx = canvas.getContext("2d");
+    let grid2D = new Array(50).fill(0).map(() => new Array(50).fill(0));
+
+    function randomColor()
+    {
+        let color = `rgb(${Math.floor(Math.random() * 256)}, ${Math.floor(Math.random() * 256)}, ${Math.floor(Math.random() * 256)})`;
+        console.log(color);
+        return color;
+    }
+
+    function drawGrid(grid) {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        ctx.fillStyle = "black";
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+        
+        // Calculate cell size based on grid dimensions
+        const cellWidth = canvas.width / grid.length;
+        const cellHeight = canvas.height / grid[0].length;
+
+        for (let i = 0; i < grid.length; i++) {
+            for (let j = 0; j < grid[i].length; j++) {
+                if (grid[i][j] !== null) {
+                    ctx.fillStyle = grid[i][j];
+                    ctx.fillRect(i * cellWidth, j * cellHeight, cellWidth, cellHeight);
+                } else {
+                    ctx.fillStyle = "black";
+                    ctx.fillRect(i * cellWidth, j * cellHeight, cellWidth, cellHeight);
+                }
+            }
+        }
+    }
+
+    function upscaleGrid(grid) {
+        let scaleFactor = document.getElementById("scaleFactor").value;
+        const oldWidth = grid.length;
+        const oldHeight = grid[0].length;
+        
+        // Adjust dimensions to remove duplicate edge pixels
+        const newWidth = (oldWidth * scaleFactor) - 1;
+        const newHeight = (oldHeight * scaleFactor) - 1;
+        
+        // Create new grid with the adjusted upscaled dimensions
+        const newGrid = new Array(newWidth).fill(0).map(() => new Array(newHeight).fill(null));
+        
+        // For each pixel in the new grid
+        for (let x = 0; x < newWidth; x++) {
+            for (let y = 0; y < newHeight; y++) {
+                // Map to position in original grid
+                const gx = (x / (newWidth - 1)) * (oldWidth - 1);
+                const gy = (y / (newHeight - 1)) * (oldHeight - 1);
+                
+                // Get the four nearest pixels in the original grid
+                const x1 = Math.floor(gx);
+                const y1 = Math.floor(gy);
+                const x2 = Math.min(x1 + 1, oldWidth - 1);
+                const y2 = Math.min(y1 + 1, oldHeight - 1);
+                
+                // Calculate interpolation weights
+                const wx = gx - x1;
+                const wy = gy - y1;
+                
+                // Get colors of the four pixels
+                const colorTopLeft = grid[x1][y1];
+                const colorTopRight = grid[x2][y1];
+                const colorBottomLeft = grid[x1][y2];
+                const colorBottomRight = grid[x2][y2];
+                
+                // Parse the RGB values from the four colors
+                const colorTL = parseRGB(colorTopLeft);
+                const colorTR = parseRGB(colorTopRight);
+                const colorBL = parseRGB(colorBottomLeft);
+                const colorBR = parseRGB(colorBottomRight);
+                
+                // Interpolate each color channel
+                const r = bilinearInterpolate(colorTL.r, colorTR.r, colorBL.r, colorBR.r, wx, wy);
+                const g = bilinearInterpolate(colorTL.g, colorTR.g, colorBL.g, colorBR.g, wx, wy);
+                const b = bilinearInterpolate(colorTL.b, colorTR.b, colorBL.b, colorBR.b, wx, wy);
+                
+                // Set the interpolated color in the new grid
+                newGrid[x][y] = `rgb(${r}, ${g}, ${b})`;
+            }
+        }
+        
+        return newGrid;
+    }
+
+    // Helper function to extract RGB values from a color string
+    function parseRGB(colorString) {
+        // Extract the RGB values from the color string (e.g., "rgb(255, 0, 0)")
+        const match = colorString.match(/rgb\((\d+),\s*(\d+),\s*(\d+)\)/);
+        if (match) {
+            return {
+                r: parseInt(match[1]),
+                g: parseInt(match[2]),
+                b: parseInt(match[3])
+            };
+        }
+        // Default to black if can't parse
+        return { r: 0, g: 0, b: 0 };
+    }
+
+    // Bilinear interpolation function for a single channel
+    function bilinearInterpolate(topLeft, topRight, bottomLeft, bottomRight, x, y) {
+        // Linear interpolation horizontally
+        const top = topLeft * (1 - x) + topRight * x;
+        const bottom = bottomLeft * (1 - x) + bottomRight * x;
+        
+        // Linear interpolation vertically
+        return Math.round(top * (1 - y) + bottom * y);
+    }
+
+    for (let i = 0; i < grid2D.length; i++) {
+        for (let j = 0; j < grid2D[i].length; j++) {
+            grid2D[i][j] = randomColor();
+        }
+    }
+    drawGrid(grid2D);
+</script>
+
+<style>
+    section {
+        margin: 4rem;
+    }
+</style>
