@@ -10,22 +10,22 @@ import Project from '../components/projects/Project.astro';
             <p class="text-zinc-400">A collection of my work and side projects</p>
         </header>
 
-        <section class="flex flex-wrap justify-center gap-2">
+        <section class="flex row flex-wrap justify-center gap-2">
             <Project 
                 projectName="Music"
-                projectDesc="A website I've made to learn new skills and showcase music-related content"
+                projectDesc="A webpage I've made to learn new skills and create a place for me to rate music albums"
                 projectUrl="/projects/music"
+            />
+            <Project 
+                projectName="Music 2.0"
+                projectDesc="A completely revamped version of my music webpage, built from the ground up with a new design and features, still in development. Password protected."
+                projectUrl="/projects/music2"
+                flags="WIP"
             />
             <Project 
                 projectName="Wielomiany"
                 projectDesc="Maths long term project exploring polynomial functions and their applications"
                 projectUrl="/projects/wielomiany"
-            />
-            <Project 
-                projectName="Coming Soon"
-                projectDesc="A new project currently under development"
-                projectUrl="/projects/upcoming"
-                flags="WIP"
             />
         </section>
     </div>

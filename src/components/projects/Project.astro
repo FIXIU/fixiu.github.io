@@ -3,19 +3,21 @@ const {
     projectName, 
     projectDesc, 
     projectUrl, 
-    flags 
+    flags,
+    password = "skibidi123"
 } = Astro.props;
 
 var containerFlags = "bg-zinc-800/40 border-zinc-700/40";
 var textColor = "text-zinc-200";
 var descColor = "text-zinc-400";
 var anchor = "";
+var isPasswordProtected = false;
 
 if (flags === "WIP") {
     containerFlags = "bg-zinc-900/20 border-zinc-500/20";
     textColor = "text-zinc-500";
     descColor = "text-zinc-600";
-    anchor = "cursor-not-allowed pointer-events-none";
+    isPasswordProtected = true;
 }
 
 if (flags === "maintenance") {
@@ -23,33 +25,144 @@ if (flags === "maintenance") {
     textColor = "text-zinc-300";
     descColor = "text-zinc-500";
 }
+
+// "unique" project ID
+const projectId = `project-${Math.random().toString(36).substring(2, 11)}`;
 ---
 
-<a href={projectUrl} class={`no-underline w-full sm:flex-grow sm:basis-80 sm:max-w-md h-auto sm:h-64 font-sans m-1 sm:m-3 transition-all duration-300 ease-in-out ${anchor}`}>
-    <div class={`group relative flex flex-col justify-between h-full rounded-xl ${containerFlags} border active:border-blue-500/50 hover:border-zinc-500/50 hover:scale-[1.02] active:scale-[0.98] hover:shadow-lg hover:shadow-zinc-900/20 transition-all duration-300 overflow-hidden`}>
-        <div class="p-3 sm:p-5 relative z-10">
-            <h2 class={`${textColor} text-lg sm:text-xl font-medium mb-1 group-hover:text-blue-300 transition-colors duration-300`}>{projectName}</h2>
-            <p class={`${descColor} text-xs sm:text-sm line-clamp-3 sm:line-clamp-none`}>{projectDesc}</p>
+<div class="group project-container no-underline w-full sm:flex-grow sm:basis-80 sm:max-w-md h-auto sm:h-64 font-sans m-1 sm:m-3 transition-all duration-300 ease-in-out" data-project-id={projectId}>
+    <a 
+        href={isPasswordProtected ? "#" : projectUrl}
+        class={`no-underline w-full sm:flex-grow sm:basis-80 sm:max-w-md h-auto sm:h-64 font-sans m-1 sm:m-3 transition-all duration-300 ease-in-out ${anchor}`}
+        data-project-url={projectUrl}
+        data-project-password={password}
+        data-is-protected={isPasswordProtected}
+    >
+        <div class={`relative flex flex-col justify-between h-full rounded-xl ${containerFlags} border active:border-blue-500/50 hover:border-zinc-500/50 hover:scale-[1.02] active:scale-[0.98] hover:shadow-lg hover:shadow-zinc-900/20 transition-all duration-300 overflow-hidden`}>
+            <div class="p-3 sm:p-5 relative z-10">
+                <h2 class={`${textColor} text-lg sm:text-xl font-medium mb-1 group-hover:text-blue-300 transition-colors duration-300`}>{projectName}</h2>
+                <p class={`${descColor} text-xs sm:text-sm line-clamp-3 sm:line-clamp-none`}>{projectDesc}</p>
+            </div>
+            
+            <div class="flex items-center h-8 sm:h-10 p-2 sm:p-4 border-t border-zinc-700/30 relative z-10 justify-end gap-2">
+                {flags === "WIP" && (
+                    <div class="flex items-center">
+                        <span class="px-2 py-0.5 text-xs rounded-full bg-zinc-700/50 text-zinc-400">Password Protected</span>
+                    </div>
+                    <div class="flex items-center">
+                        <span class="px-2 py-0.5 text-xs rounded-full bg-zinc-700/50 text-zinc-400">WIP</span>
+                    </div>
+                )}
+                {flags === "maintenance" && (
+                    <div class="flex items-center">
+                        <span class="w-1.5 sm:w-2 h-1.5 sm:h-2 bg-yellow-500 rounded-full mr-1 sm:mr-2 animate-pulse"></span>
+                        <span class="text-xs text-zinc-400">Under Maintenance</span>
+                    </div>
+                )}
+                {!flags && (
+                    <div class="flex items-center">
+                        <span class="w-1.5 sm:w-2 h-1.5 sm:h-2 bg-green-400 rounded-full mr-1 sm:mr-2 animate-pulse"></span>
+                        <span class="text-xs text-zinc-400">Active</span>
+                    </div>
+                )}
+            </div>
         </div>
+    </a>
+
+    {isPasswordProtected && (
+        <div id={`password-modal-${projectId}`} class="password-modal fixed inset-0 bg-black bg-opacity-50 items-center justify-center z-50 hidden">
+            <div class="bg-zinc-800 rounded-xl p-6 max-w-md w-full mx-4 shadow-xl border border-zinc-700">
+                <div class="flex justify-between items-center mb-4">
+                    <h3 class="text-zinc-200 text-lg font-medium">Password Required</h3>
+                    <button class="close-modal text-zinc-400 hover:text-white">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                        </svg>
+                    </button>
+                </div>
+                <p class="text-zinc-400 mb-4 text-sm">This project is a work in progress and requires a password to access.</p>
+                <form class="password-form">
+                    <input 
+                        type="password" 
+                        class="w-full bg-zinc-900 border border-zinc-700 rounded-lg px-4 py-2 text-zinc-300 focus:outline-none focus:border-blue-500 mb-4"
+                        placeholder="Enter password"
+                        required
+                    />
+                    <div class="flex justify-end">
+                        <button 
+                            type="button" 
+                            class="cancel-btn mr-2 px-4 py-2 bg-zinc-700 hover:bg-zinc-600 text-zinc-300 rounded-lg transition-colors"
+                        >
+                            Cancel
+                        </button>
+                        <button 
+                            type="submit" 
+                            class="px-4 py-2 bg-blue-600 hover:bg-blue-500 text-white rounded-lg transition-colors"
+                        >
+                            Access
+                        </button>
+                    </div>
+                </form>
+                <p class="error-message text-red-500 mt-2 text-sm hidden">Incorrect password. Please try again.</p>
+            </div>
+        </div>
+    )}
+</div>
+
+<script define:vars={{ projectId, isPasswordProtected }}>
+if (isPasswordProtected) {
+    document.addEventListener('DOMContentLoaded', () => {
+        const projectContainer = document.querySelector(`[data-project-id="${projectId}"]`);
+        const projectLink = projectContainer.querySelector('a');
+        const modal = document.getElementById(`password-modal-${projectId}`);
+        const closeBtn = modal.querySelector('.close-modal');
+        const cancelBtn = modal.querySelector('.cancel-btn');
+        const form = modal.querySelector('.password-form');
+        const errorMessage = modal.querySelector('.error-message');
         
-        <div class="flex items-center h-8 sm:h-10 p-2 sm:p-4 border-t border-zinc-700/30 relative z-10">
-            {flags === "WIP" && (
-                <div class="ml-auto flex items-center">
-                    <span class="px-2 py-0.5 text-xs rounded-full bg-zinc-700/50 text-zinc-400">WIP</span>
-                </div>
-            )}
-            {flags === "maintenance" && (
-                <div class="ml-auto flex items-center">
-                    <span class="w-1.5 sm:w-2 h-1.5 sm:h-2 bg-yellow-500 rounded-full mr-1 sm:mr-2 animate-pulse"></span>
-                    <span class="text-xs text-zinc-400">Under Maintenance</span>
-                </div>
-            )}
-            {!flags && (
-                <div class="ml-auto flex items-center">
-                    <span class="w-1.5 sm:w-2 h-1.5 sm:h-2 bg-green-400 rounded-full mr-1 sm:mr-2 animate-pulse"></span>
-                    <span class="text-xs text-zinc-400">Active</span>
-                </div>
-            )}
-        </div>
-    </div>
-</a>
+        const openModal = () => {
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+            modal.querySelector('input').focus();
+        };
+        
+        const closeModal = () => {
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+            form.reset();
+            errorMessage.classList.add('hidden');
+        };
+        
+        projectLink.addEventListener('click', (e) => {
+            e.preventDefault();
+            openModal();
+        });
+        
+        closeBtn.addEventListener('click', closeModal);
+        cancelBtn.addEventListener('click', closeModal);
+        
+        modal.addEventListener('click', (e) => {
+            if (e.target === modal) closeModal();
+        });
+        
+        form.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const enteredPassword = form.querySelector('input').value;
+            const correctPassword = projectLink.dataset.projectPassword;
+            const redirectUrl = projectLink.dataset.projectUrl;
+            
+            if (enteredPassword === correctPassword) {
+                window.location.href = redirectUrl;
+            } else {
+                errorMessage.classList.remove('hidden');
+            }
+        });
+        
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && !modal.classList.contains('hidden')) {
+                closeModal();
+            }
+        });
+    });
+}
+</script>
