@@ -52,6 +52,7 @@ type Props = {
       header: string;
       intro: string;
       rotatingWords: string[];
+      rotatingWordComment: string;
     };
   };
 };

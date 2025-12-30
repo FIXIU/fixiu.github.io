@@ -1,6 +1,6 @@
 import { getDictionary, hasLocale, type Locale } from "../../dictionaries";
 import { notFound } from "next/navigation";
-import ContactView from "./contact-view.tsx";
+import ContactView from "./contact-view";
 
 type Props = {
   params: Promise<{ locale: string }>;
