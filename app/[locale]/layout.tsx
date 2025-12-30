@@ -65,6 +65,7 @@ export const metadata: Metadata = {
       },
     ],
   },
+  themeColor: "#9ae600",
 };
 
 // Generate static params for all locales
