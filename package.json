@@ -9,12 +9,16 @@
     "lint": "eslint"
   },
   "dependencies": {
+    "@formatjs/intl-localematcher": "^0.7.2",
+    "framer-motion": "^12.23.26",
+    "negotiator": "^1.0.0",
     "next": "16.0.8",
     "react": "19.2.1",
     "react-dom": "19.2.1"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4",
+    "@types/negotiator": "^0.6.4",
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
