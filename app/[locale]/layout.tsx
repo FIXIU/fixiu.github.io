@@ -92,6 +92,7 @@ export default async function LocaleLayout({ children, params }: Props) {
       <body
         className={`${satoshi.variable} ${rx100.variable} ${stardom.variable} antialiased`}
       >
+        {/* <div className="noise-overlay" aria-hidden="true" /> */}
         <Cursor />
         <Header navigation={dictionary.navigation} locale={locale} />
         {children}

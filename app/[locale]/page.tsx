@@ -1,5 +1,6 @@
 import { getDictionary, hasLocale, type Locale } from "../dictionaries";
 import { notFound } from "next/navigation";
+import HomeView from "./home-view";
 
 type Props = {
   params: Promise<{ locale: string }>;
@@ -51,14 +52,5 @@ export default async function Home({ params }: Props) {
     .replace("{age}", String(age))
     .replace("{grade}", String(grade));
 
-  return (
-    <div className="flex min-h-[calc(100vh-63px)] bg-zinc-50 font-sans dark:bg-black">
-      <main className="w-full h-full">
-        <div className="min-h-[calc(100vh-63px)]">
-          <h1 className="text-8xl font-black ">Filip Kowalczyk</h1>
-        </div>
-        <div>{introText}</div>
-      </main>
-    </div>
-  );
+  return <HomeView introText={introText} />;
 }
