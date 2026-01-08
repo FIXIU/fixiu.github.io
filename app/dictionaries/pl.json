@@ -5,7 +5,27 @@
     "contact": "Kontakt"
   },
   "home": {
-    "intro": "Mam {age} lat i jestem uczniem {grade} klasy kierunku technik programista w ZSEiI Sosnowiec"
+    "intro": "Nazywam się Filip Kowalczyk, mam {age} lat i jestem uczniem {grade} klasy kierunku technik programista w ZSEiI Sosnowiec",
+    "creative_developer": "KREATYWNY DEWELOPER",
+    "design_code_motion": "Design × Kod",
+    "scroll": "Przewiń",
+    "available_for_work": "OTWARTY NA WSPÓŁPRACĘ",
+    "selected_works": "Wybrane Projekty",
+    "view_all": "Zobacz Wszystkie",
+    "projects": [
+      {
+        "name": "Projekt ??????????",
+        "year": "2026",
+        "tech": "C# / Godot",
+        "description": "Gra wyścigowa z mocnym stylem \"retro\"."
+      },
+      {
+        "name": "Projekt ???????",
+        "year": "2026",
+        "tech": "Next.js / InfluxDB / MQTT / Python",
+        "description": "Platforma do kontrolowania próbek testowych w środowisku laboratoryjnym z dowolnego miejsca na świecie."
+      }
+    ]
   },
   "about": {
     "header": "O mnie",

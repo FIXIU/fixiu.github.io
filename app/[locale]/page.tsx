@@ -52,5 +52,5 @@ export default async function Home({ params }: Props) {
     .replace("{age}", String(age))
     .replace("{grade}", String(grade));
 
-  return <HomeView introText={introText} />;
+  return <HomeView introText={introText} dictionary={dictionary.home} />;
 }
