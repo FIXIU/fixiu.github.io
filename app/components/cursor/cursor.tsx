@@ -13,20 +13,20 @@ export default function Cursor() {
 
   // Physics config - Snappy but smooth
   const springConfig = { damping: 20, stiffness: 450, mass: 0.15 };
-  
+
   const cursorX = useSpring(mouseX, springConfig);
   const cursorY = useSpring(mouseY, springConfig);
-  
+
   // Scale logic
   const scale = useSpring(1, springConfig);
 
   useEffect(() => {
     const checkTouch = () => {
-      const isTouch = (typeof window !== "undefined") && (
-        "ontouchstart" in window ||
-        navigator.maxTouchPoints > 0 ||
-        window.matchMedia("(pointer: coarse)").matches
-      );
+      const isTouch =
+        typeof window !== "undefined" &&
+        ("ontouchstart" in window ||
+          navigator.maxTouchPoints > 0 ||
+          window.matchMedia("(pointer: coarse)").matches);
       setIsTouchDevice(isTouch);
       if (isTouch) document.body.classList.add("touch-device");
     };
@@ -40,23 +40,31 @@ export default function Cursor() {
     if (isTouchDevice) return;
 
     const handleMouseMove = (e: MouseEvent) => {
-        mouseX.set(e.clientX);
-        mouseY.set(e.clientY);
+      mouseX.set(e.clientX);
+      mouseY.set(e.clientY);
     };
 
     const handleMouseOver = (e: MouseEvent) => {
       const target = e.target as HTMLElement;
-      if (target.closest("a, button, input, textarea, [data-cursor-hover], .magnetic-wrap")) {
+      if (
+        target.closest(
+          "a, button, input, textarea, [data-cursor-hover], .magnetic-wrap"
+        )
+      ) {
         scale.set(3.5); // Scales to ~70px
       }
     };
 
     const handleMouseOut = (e: MouseEvent) => {
-        const target = e.target as HTMLElement;
-        const related = e.relatedTarget as HTMLElement;
-        if (!related?.closest("a, button, input, textarea, [data-cursor-hover], .magnetic-wrap")) {
-            scale.set(1);
-        }
+      const target = e.target as HTMLElement;
+      const related = e.relatedTarget as HTMLElement;
+      if (
+        !related?.closest(
+          "a, button, input, textarea, [data-cursor-hover], .magnetic-wrap"
+        )
+      ) {
+        scale.set(1);
+      }
     };
 
     window.addEventListener("mousemove", handleMouseMove);
