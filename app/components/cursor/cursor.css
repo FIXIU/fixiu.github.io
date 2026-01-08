@@ -1,95 +1,24 @@
 .custom-cursor {
   position: fixed;
+  top: 0;
+  left: 0;
   width: 20px;
   height: 20px;
-  pointer-events: none;
-  z-index: 100;
-  opacity: 0;
-  will-change: transform, opacity;
-  transition: opacity 0.2s ease;
-}
-
-.custom-cursor__inner {
-  position: absolute;
-  inset: 0;
+  background-color: white;
   border-radius: 50%;
-  background-color: oklch(50% 0 0 / 0.2);
-  outline: 1px solid oklch(50% 0 0 / 0.5);
-  outline-offset: -1px;
-  transform: scale(1);
-  will-change: transform, background-color, outline-color;
-  transition: transform 0.15s cubic-bezier(0.4, 0, 0.2, 1),
-    background-color 0.2s ease, outline-color 0.2s ease;
+  pointer-events: none;
+  z-index: 9999;
+  mix-blend-mode: difference;
+  transform-origin: center center;
+  margin-left: -10px;
+  margin-top: -10px;
 }
 
-.custom-cursor.visible {
-  opacity: 1;
+/* Hide default cursor only when the custom cursor is active */
+body:not(.touch-device) * {
+  cursor: none !important;
 }
 
-.custom-cursor.hovering .custom-cursor__inner {
-  transform: scale(1.5);
-  background-color: oklch(100% 0 0 / 0.2);
-  outline-color: oklch(50% 0 0 / 0.75);
-}
-
-.custom-cursor.clicking .custom-cursor__inner {
-  transform: scale(0.85);
-}
-
-@media (prefers-color-scheme: dark) {
-  .custom-cursor__inner {
-    background-color: oklch(100% 0 0 / 0.2);
-    outline-color: oklch(100% 0 0 / 0.5);
-  }
-
-  .custom-cursor.hovering .custom-cursor__inner {
-    background-color: oklch(100% 0 0 / 0.3);
-    outline-color: oklch(100% 0 0 / 0.8);
-  }
-}
-
-/* Hide custom cursor on touch devices */
-@media (hover: none) and (pointer: coarse) {
-  .custom-cursor {
-    display: none !important;
-  }
-}
-
-/* disable default cursor visibility - only on devices with hover capability */
-@media (hover: hover) and (pointer: fine) {
-  *,
-  *::before,
-  *::after {
-    cursor: none !important;
-  }
-
-  a,
-  button,
-  input,
-  textarea,
-  select,
-  label,
-  [role="button"],
-  [onclick],
-  [tabindex]:not([tabindex="-1"]) {
-    cursor: none !important;
-  }
-
-  a:hover,
-  a:active,
-  a:focus,
-  button:hover,
-  button:active,
-  button:focus,
-  input:hover,
-  input:active,
-  input:focus,
-  textarea:hover,
-  textarea:active,
-  textarea:focus,
-  select:hover,
-  select:active,
-  select:focus {
-    cursor: none !important;
-  }
+.touch-device .custom-cursor {
+  display: none;
 }

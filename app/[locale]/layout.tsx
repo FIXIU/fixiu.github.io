@@ -4,6 +4,7 @@ import localFont from "next/font/local";
 import Cursor from "../components/cursor/cursor";
 import Header from "../components/header";
 import Footer from "../components/footer";
+import SmoothScroll from "../components/smooth-scroll";
 import { getDictionary, hasLocale, type Locale } from "../dictionaries";
 import { notFound } from "next/navigation";
 
@@ -50,7 +51,7 @@ const stardom = localFont({
 
 export const metadata: Metadata = {
   title: "Filip Kowalczyk",
-  description: "Portfolio Filipa Kowalczyka - Developer",
+  description: "Portfolio Filipa Kowalczyka - Creative Developer",
   icons: {
     icon: [
       {
@@ -93,11 +94,12 @@ export default async function LocaleLayout({ children, params }: Props) {
       <body
         className={`${satoshi.variable} ${rx100.variable} ${stardom.variable} antialiased`}
       >
-        {/* <div className="noise-overlay" aria-hidden="true" /> */}
-        <Cursor />
-        <Header navigation={dictionary.navigation} locale={locale} />
-        {children}
-        <Footer locale={locale} />
+        <SmoothScroll>
+          <Cursor />
+          <Header navigation={dictionary.navigation} locale={locale} />
+          {children}
+          <Footer locale={locale} />
+        </SmoothScroll>
       </body>
     </html>
   );

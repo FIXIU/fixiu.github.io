@@ -23,13 +23,13 @@ export default function Marquee({
   return (
     <div className="w-full overflow-hidden border-y border-zinc-200 dark:border-zinc-800 py-4 sm:py-6">
       <motion.div
-        className="flex whitespace-nowrap"
+        className="flex whitespace-nowrap w-fit"
         animate={{ x: ["0%", "-50%"] }}
         transition={{
           x: {
             repeat: Infinity,
             repeatType: "loop",
-            duration: 20,
+            duration: 60,
             ease: "linear",
           },
         }}
@@ -37,7 +37,7 @@ export default function Marquee({
         {items.map((item, index) => (
           <span
             key={index}
-            className={`text-4xl sm:text-6xl md:text-7xl font-black uppercase tracking-tight mx-8 ${className}`}
+            className={`flex items-center text-4xl sm:text-6xl md:text-7xl font-black uppercase tracking-tight ${className}`}
           >
             {item}
             <span className="text-lime-400 mx-8">•</span>
@@ -47,7 +47,7 @@ export default function Marquee({
         {items.map((item, index) => (
           <span
             key={`dup-${index}`}
-            className={`text-4xl sm:text-6xl md:text-7xl font-black uppercase tracking-tight mx-8 ${className}`}
+            className={`flex items-center text-4xl sm:text-6xl md:text-7xl font-black uppercase tracking-tight ${className}`}
           >
             {item}
             <span className="text-lime-400 mx-8">•</span>
