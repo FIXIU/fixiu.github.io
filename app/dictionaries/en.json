@@ -1,59 +1,63 @@
 {
-  "navigation": {
-    "home": "home",
-    "about": "about",
-    "contact": "contact"
-  },
-  "home": {
-    "intro": "My name is Filip Kowalczyk, I'm a {age} year old programmer in {grade}th grade majoring programming at ZSEiI Sosnowiec",
-    "creative_developer": "CREATIVE DEVELOPER",
-    "design_code_motion": "Design × Code",
-    "scroll": "Scroll",
-    "available_for_work": "AVAILABLE FOR WORK",
-    "selected_works": "Selected Works",
-    "view_all": "View All Projects",
-    "projects": [
-      {
-        "name": "Project ??????????",
-        "year": "2026",
-        "tech": "C# / Godot",
-        "description": "A racing game with a strong \"retro\" style."
-      },
-      {
-        "name": "Project ???????",
-        "year": "2026",
-        "tech": "Next.js / InfluxDB / MQTT / Python",
-        "description": "A platform for controlling test samples in a laboratory environment anywhere in the world."
-      }
-    ]
-  },
-  "about": {
-    "header": "About me",
-    "intro": "I'm a",
-    "rotatingWords": [
-      "programmer",
-      "designer",
-      "creator",
-      "technology enthusiast",
-      "student",
-      "innovator",
-      "coder",
-      "developer",
-      "researcher",
-      "experimenter",
-      "dreamer",
-      "visionary"
-    ],
-    "rotatingWordComment": "One could list endlessly, but the most important thing is that I am a creative person who strives every day to broaden their horizons and develop skills in the fields of technology, design and beyond. I love challenges and strive to create innovative solutions that have a real impact on the world."
-  },
-  "contact": {
-    "header": "Get in touch",
-    "hello": "filipkowalczyk",
-    "handle": "@tuta.io",
-    "socials": {
-      "github": "GITHUB",
-      "linkedin": "LINKEDIN",
-      "instagram": "INSTAGRAM"
+    "navigation": {
+        "home": "home",
+        "about": "about",
+        "contact": "contact"
+    },
+    "common": {
+        "copied": "Copied!"
+    },
+    "home": {
+        "intro": "I am a {age} year old programmer in {grade}th grade majoring programming at ZSEiI Sosnowiec",
+        "creative_developer": "Filip Kowalczyk",
+        "design_code_motion": "Creative Developer",
+        "scroll": "Scroll",
+        "available_for_work": "AVAILABLE FOR WORK",
+        "selected_works": "Selected Works",
+        "view_all": "View All Projects",
+        "projects": [
+            {
+                "name": "Project ??????????",
+                "year": "2026",
+                "tech": "C# / Godot",
+                "description": "A racing game with a strong \"retro\" style."
+            },
+            {
+                "name": "Project ???????",
+                "year": "2026",
+                "tech": "Next.js / InfluxDB / MQTT / Python",
+                "description": "A platform for controlling test samples in a laboratory environment anywhere in the world."
+            }
+        ]
+    },
+    "about": {
+        "header": "About me",
+        "intro": "I'm a",
+        "rotatingWords": [
+            "programmer",
+            "designer",
+            "creator",
+            "technology enthusiast",
+            "student",
+            "innovator",
+            "coder",
+            "developer",
+            "researcher",
+            "experimenter",
+            "dreamer",
+            "visionary"
+        ],
+        "rotatingWordComment": "One could list endlessly, but the most important thing is that I am a creative person who strives every day to broaden their horizons and develop skills in the fields of technology, design and beyond. I love challenges and strive to create innovative solutions that have a real impact on the world."
+    },
+    "contact": {
+        "header": "Get in touch",
+        "hello": "filipkowalczyk",
+        "handle": "@tuta.io",
+        "copy_email": "Copy email",
+        "socials": {
+            "github": "GITHUB",
+            "linkedin": "LINKEDIN",
+            "instagram": "INSTAGRAM"
+        }
     }
-  }
 }

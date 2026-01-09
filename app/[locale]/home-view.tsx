@@ -53,10 +53,10 @@ export default function HomeView({ introText, dictionary }: Props) {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, ease: [0.25, 0.1, 0.25, 1] }}
             >
-              {firstLine || "CREATIVE"}
+              {firstLine || "Filip"}
               <br />
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-lime-400 to-lime-500">
-                {secondLine || "DEVELOPER"}
+                {secondLine || "Kowalczyk"}
               </span>
             </motion.h1>
 

@@ -1,59 +1,63 @@
 {
-  "navigation": {
-    "home": "główna",
-    "about": "O mnie",
-    "contact": "Kontakt"
-  },
-  "home": {
-    "intro": "Nazywam się Filip Kowalczyk, mam {age} lat i jestem uczniem {grade} klasy kierunku technik programista w ZSEiI Sosnowiec",
-    "creative_developer": "KREATYWNY DEWELOPER",
-    "design_code_motion": "Design × Kod",
-    "scroll": "Przewiń",
-    "available_for_work": "OTWARTY NA WSPÓŁPRACĘ",
-    "selected_works": "Wybrane Projekty",
-    "view_all": "Zobacz Wszystkie",
-    "projects": [
-      {
-        "name": "Projekt ??????????",
-        "year": "2026",
-        "tech": "C# / Godot",
-        "description": "Gra wyścigowa z mocnym stylem \"retro\"."
-      },
-      {
-        "name": "Projekt ???????",
-        "year": "2026",
-        "tech": "Next.js / InfluxDB / MQTT / Python",
-        "description": "Platforma do kontrolowania próbek testowych w środowisku laboratoryjnym z dowolnego miejsca na świecie."
-      }
-    ]
-  },
-  "about": {
-    "header": "O mnie",
-    "intro": "Jestem",
-    "rotatingWords": [
-      "programistą",
-      "projektantem",
-      "twórcą",
-      "entuzjastą technologii",
-      "uczniem",
-      "innowatorem",
-      "koderem",
-      "developerem",
-      "badaczem",
-      "eksperymentatorem",
-      "marzycielem",
-      "wizjonerem"
-    ],
-    "rotatingWordComment": "Można tak wymieniać bez końca, ale najważniejsze jest to, że jestem osobą kreatywną, która co dzień stara się poszerzać swoje horyzonty i rozwijać umiejętności w dziedzinach technologii oraz designu i nie tylko. Uwielbiam wyzwania i dążę do tworzenia innowacyjnych rozwiązań, które mają realny wpływ na świat."
-  },
-  "contact": {
-    "header": "Skontaktuj się ze mną",
-    "hello": "filipkowalczyk",
-    "handle": "@tuta.io",
-    "socials": {
-      "github": "GITHUB",
-      "linkedin": "LINKEDIN",
-      "instagram": "INSTAGRAM"
+    "navigation": {
+        "home": "główna",
+        "about": "O mnie",
+        "contact": "Kontakt"
+    },
+    "common": {
+        "copied": "Skopiowano!"
+    },
+    "home": {
+        "intro": "Mam {age} lat i jestem uczniem {grade} klasy kierunku technik programista w ZSEiI Sosnowiec",
+        "creative_developer": "Filip Kowalczyk",
+        "design_code_motion": "Kreatywny Deweloper",
+        "scroll": "Przewiń",
+        "available_for_work": "OTWARTY NA WSPÓŁPRACĘ",
+        "selected_works": "Wybrane Projekty",
+        "view_all": "Zobacz Wszystkie",
+        "projects": [
+            {
+                "name": "Projekt ??????????",
+                "year": "2026",
+                "tech": "C# / Godot",
+                "description": "Gra wyścigowa z mocnym stylem \"retro\"."
+            },
+            {
+                "name": "Projekt ???????",
+                "year": "2026",
+                "tech": "Next.js / InfluxDB / MQTT / Python",
+                "description": "Platforma do kontrolowania próbek testowych w środowisku laboratoryjnym z dowolnego miejsca na świecie."
+            }
+        ]
+    },
+    "about": {
+        "header": "O mnie",
+        "intro": "Jestem",
+        "rotatingWords": [
+            "programistą",
+            "projektantem",
+            "twórcą",
+            "entuzjastą technologii",
+            "uczniem",
+            "innowatorem",
+            "koderem",
+            "developerem",
+            "badaczem",
+            "eksperymentatorem",
+            "marzycielem",
+            "wizjonerem"
+        ],
+        "rotatingWordComment": "Można tak wymieniać bez końca, ale najważniejsze jest to, że jestem osobą kreatywną, która co dzień stara się poszerzać swoje horyzonty i rozwijać umiejętności w dziedzinach technologii oraz designu i nie tylko. Uwielbiam wyzwania i dążę do tworzenia innowacyjnych rozwiązań, które mają realny wpływ na świat."
+    },
+    "contact": {
+        "header": "Skontaktuj się ze mną",
+        "hello": "filipkowalczyk",
+        "handle": "@tuta.io",
+        "copy_email": "Kopiuj email",
+        "socials": {
+            "github": "GITHUB",
+            "linkedin": "LINKEDIN",
+            "instagram": "INSTAGRAM"
+        }
     }
-  }
 }
