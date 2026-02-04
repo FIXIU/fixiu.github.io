@@ -7,6 +7,10 @@ type Props = {
   children: ReactNode;
 };
 
+let lenisInstance: Lenis | null = null;
+
+export const getLenis = () => lenisInstance;
+
 export default function SmoothScroll({ children }: Props) {
   const lenisRef = useRef<Lenis | null>(null);
 
@@ -21,6 +25,7 @@ export default function SmoothScroll({ children }: Props) {
     });
 
     lenisRef.current = lenis;
+    lenisInstance = lenis;
 
     function raf(time: number) {
       lenis.raf(time);
@@ -30,6 +35,7 @@ export default function SmoothScroll({ children }: Props) {
     requestAnimationFrame(raf);
 
     return () => {
+      lenisInstance = null;
       lenis.destroy();
     };
   }, []);

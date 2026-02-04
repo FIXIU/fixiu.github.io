@@ -1,3 +1,50 @@
+.statystyka-theme {
+  --stat-bg: #f8f5f1;
+  --stat-text: #1c1917;
+  --stat-muted: #57534e;
+  --stat-card: rgba(245, 242, 237, 0.9);
+  --stat-border: rgba(120, 113, 108, 0.4);
+  --stat-divider: rgba(120, 113, 108, 0.4);
+  --stat-grid: rgba(120, 113, 108, 0.35);
+  --stat-axis: #57534e;
+  --stat-tooltip-bg: rgba(255, 252, 246, 0.97);
+  --stat-tooltip-text: #1c1917;
+  --stat-accent: #d97706;
+}
+
+@media (prefers-color-scheme: dark) {
+  .statystyka-theme {
+    --stat-bg: #0c0a09;
+    --stat-text: #e7e5e4;
+    --stat-muted: #a8a29e;
+    --stat-card: rgba(28, 25, 23, 0.6);
+    --stat-border: rgba(120, 113, 108, 0.6);
+    --stat-divider: rgba(120, 113, 108, 0.7);
+    --stat-grid: #292524;
+    --stat-axis: #a8a29e;
+    --stat-tooltip-bg: rgba(12, 10, 9, 0.98);
+    --stat-tooltip-text: #fafaf9;
+  }
+}
+
+.statystyka-theme .katex-display {
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding: 0.25rem 0.5rem;
+  -webkit-overflow-scrolling: touch;
+}
+
+.statystyka-theme .katex-display > .katex {
+  display: inline-block;
+  min-width: max-content;
+}
+
+@media (max-width: 640px) {
+  .statystyka-theme .katex-display {
+    font-size: 0.95em;
+  }
+}
+
 ::selection {
   background: oklch(76.9% 0.188 70.08);
   color: oklch(98.5% 0.001 106.423);
