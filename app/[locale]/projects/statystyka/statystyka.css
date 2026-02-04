@@ -1,0 +1,10 @@
+::selection {
+  background: oklch(76.9% 0.188 70.08);
+  color: oklch(98.5% 0.001 106.423);
+}
+@media (prefers-color-scheme: dark) {
+  ::selection {
+    background: oklch(76.9% 0.188 70.08);
+    color: oklch(21.6% 0.006 56.043);
+  }
+}

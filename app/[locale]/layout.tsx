@@ -7,6 +7,8 @@ import Footer from "../components/footer";
 import SmoothScroll from "../components/smooth-scroll";
 import { getDictionary, hasLocale, type Locale } from "../dictionaries";
 import { notFound } from "next/navigation";
+import { Icon } from "@iconify/react";
+import "katex/dist/katex.min.css";
 
 const satoshi = localFont({
   src: [
@@ -49,9 +51,38 @@ const stardom = localFont({
   display: "swap",
 });
 
+const aktura = localFont({
+  src: [
+    {
+      path: "../../public/fonts/aktura/Aktura-Regular.woff2",
+      weight: "400",
+      style: "normal",
+    },
+  ],
+  variable: "--font-aktura",
+  display: "swap",
+});
+
+const sentient = localFont({
+  src: [
+    {
+      path: "../../public/fonts/sentient/Sentient-Variable.woff2",
+      weight: "300 900",
+      style: "normal",
+    },
+    {
+      path: "../../public/fonts/sentient/Sentient-VariableItalic.woff2",
+      weight: "300 900",
+      style: "italic",
+    },
+  ],
+  variable: "--font-sentient",
+  display: "swap",
+});
+
 export const metadata: Metadata = {
   title: "Filip Kowalczyk",
-  description: "Portfolio Filipa Kowalczyka - Creative Developer",
+  description: "Filip Kowalczyk - Creative Developer",
   icons: {
     icon: [
       {
@@ -66,7 +97,6 @@ export const metadata: Metadata = {
       },
     ],
   },
-  themeColor: "#9ae600",
 };
 
 // Generate static params for all locales
@@ -92,7 +122,7 @@ export default async function LocaleLayout({ children, params }: Props) {
   return (
     <html lang={locale}>
       <body
-        className={`${satoshi.variable} ${rx100.variable} ${stardom.variable} antialiased`}
+        className={`${satoshi.variable} ${rx100.variable} ${stardom.variable} ${aktura.variable} ${sentient.variable} antialiased`}
       >
         <SmoothScroll>
           <Cursor />

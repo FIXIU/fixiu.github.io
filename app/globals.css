@@ -11,6 +11,8 @@
   --font-sans: var(--font-satoshi);
   --font-mono: var(--font-rx100);
   --font-stardom: var(--font-stardom);
+  --font-aktura: var(--font-aktura);
+  --font-sentient: var(--font-sentient);
 }
 
 @media (prefers-color-scheme: dark) {
@@ -29,6 +31,16 @@ body {
 /* Stardom font utility */
 .font-stardom {
   font-family: var(--font-stardom), serif;
+}
+
+/* Aktura font utility */
+.font-aktura {
+  font-family: var(--font-aktura), serif;
+}
+
+/* Sentient font utility */
+.font-sentient {
+  font-family: var(--font-sentient), serif;
 }
 
 @keyframes wave {
