@@ -27,7 +27,7 @@ export default function StatystykaView() {
         </p>
       </section>
       <section className="w-4xl px-4">
-        <h3 className="text-2xl font-black my-1">Czego się nauczymy</h3>{" "}
+        <h3 className="text-2xl font-black my-1">Czego się nauczymy</h3>
         {/* Spis treści */}
         <ul className="list-disc list-inside w-full">
           <li className="pr-1 w-fit flex flex-row items-center gap-1 ease-out duration-100 bg-transparent decoration-1 group decoration-solid underline decoration-stone-500 hover:decoration-amber-600 hover:decoration-2 hover:text-stone-100 hover:bg-stone-800">
@@ -76,6 +76,7 @@ export default function StatystykaView() {
           </li>
         </ul>
       </section>
+
       <section className="w-4xl px-4">
         <h3 className="text-2xl font-black my-1">Czym jest Statystyka</h3>
         <p>
@@ -87,7 +88,9 @@ export default function StatystykaView() {
           zgadywać w ciemno, lecz na rachunku i rozumie się opierać.
         </p>
       </section>
+
       <div className="w-4xl h-px bg-stone-500"></div>
+      
       <section className="w-4xl px-4">
         <h2 className="font-aktura text-6xl mb-6 tracking-wide">
           Rozdział <b className="font-normal tracking-tighter">I.</b> O
@@ -121,7 +124,9 @@ export default function StatystykaView() {
           porządnych.
         </p>
       </section>
+
       <div className="w-4xl h-px bg-stone-500"></div>
+
       <section className="w-4xl px-4">
         <h2 className="font-aktura text-6xl mb-6 tracking-wide">
           Rozdział <b className="font-normal tracking-tighter">II.</b> O miarach
@@ -138,9 +143,7 @@ export default function StatystykaView() {
             zsumujesz, a potem przez ich liczbę podzielisz.
           </p>
           <div>
-            <p>Niechaj będzie:</p>
-            <BlockMath math="x_1, x_2, \dots, x_n - dane" />
-            <p>wtedy średnia:</p>
+            <p>Dla danych <InlineMath math="x_1, x_2, \dots, x_n" /> średnia arytmetyczna jest:</p>
             <BlockMath math="\bar{x} = \frac{x_1 + x_2 + \cdots + x_n}{n}" />
             <p>
               Średnia bywa pożyteczna, lecz strzec się trzeba, bo jedna wartość
@@ -149,7 +152,12 @@ export default function StatystykaView() {
           </div>
         </div>
         <div className="my-4 mt-8">
-          <h3 className="text-2xl font-black my-2">2. Mediana</h3>
+          <h3 className="text-2xl font-black my-2">2. Średnia ważona</h3>
+          <p>Gdy każda wartość <InlineMath math="x_i" /> ma wagę <InlineMath math="w_i" />, (np. ocenę z wagą, albo częstość), tedy średnia ważona jest:</p>
+          <BlockMath math="\bar{x}_w = \frac{w_1 x_1 + w_2 x_2 + \cdots + w_n x_n}{w_1 + w_2 + \cdots + w_n}" />
+        </div>
+        <div className="my-4 mt-8">
+          <h3 className="text-2xl font-black my-2">3. Mediana</h3>
           <p>
             Mediana jest to wartość środkowa, gdy dane w porządku stoją. Jest
             ona jak sędzia między liczbami — nie daje się łatwo omamić
@@ -157,21 +165,23 @@ export default function StatystykaView() {
           </p>
           <ul className="list-disc list-inside w-full my-4">
             <li>
-              Gdy danych jest nieparzyście: mediana to liczba w samym środku.
+              Gdy danych jest nieparzyście: mediana to liczba w samym środku. (<InlineMath math="x_{\frac{n+1}{2}}" />)
             </li>
-            <li>Gdy parzyście: mediana to średnia z dwóch środkowych.</li>
+            <li>Gdy parzyście: mediana to średnia z dwóch środkowych. (<InlineMath math="\frac{x_{\frac{n}{2}} + x_{\frac{n}{2} + 1}}{2}" />)</li>
           </ul>
         </div>
         <div className="mt-8">
           <h3 className="text-2xl font-black mt-2">3. Dominanta</h3>
           <p>
-            Dominanta (niekiedy zwana modą) jest to wartość, która najczęściej
+            Dominanta (niekiedy zwana modą) jest to wartość, która <b>najczęściej</b>
             występuje. Bywa, że jest jedna, bywa że dwie, a bywa też, że brak
             jej całkiem, gdy każda wartość jest równie rzadka.
           </p>
         </div>
       </section>
+
       <div className="w-4xl h-px bg-stone-500"></div>
+
       <section className="w-4xl px-4">
         <h2 className="font-aktura text-6xl mb-6 tracking-wide">
           Rozdział <b className="font-normal tracking-tighter">III.</b> O
@@ -221,10 +231,86 @@ export default function StatystykaView() {
           </p>
         </div>
       </section>
+      
       <div className="w-4xl h-px bg-stone-500"></div>
+
       <section className="w-4xl px-4">
         <h2 className="font-aktura text-6xl mb-6 tracking-wide">
-          Rozdział <b className="font-normal tracking-tighter">IV.</b> Praktyka
+          Rozdział <b className="font-normal tracking-tighter">IV.</b> Więcej o odchyleniu standardowym (także dla danych pogrupowanych) i jego rozumieniu
+        </h2>
+        <div className="my-4 mt-8">
+          <h3 className="text-2xl font-black my-2">1. Odchylenie standardowe dla danych niepogrupowanych</h3>
+          <p>Najpierw liczysz średnią <InlineMath math="\bar{x}" />, a potem:</p>
+          <BlockMath math="s = \sqrt{\frac{(x_1-\bar{x})^2 + \cdots + (x_n-\bar{x})^2}{n}}" />
+        </div>
+        <div className="my-4 mt-8">
+          <h3 className="text-2xl font-black my-2">2. Odchylenie standardowe dla danych pogrupowanych</h3>
+          <p>
+            Gdy dane są zebrane w grupy (przedziały), a dla każdej grupy bierzesz
+            środek przedziału <InlineMath math="m_i" /> oraz liczebność
+            (częstość) <InlineMath math="n_i" />, przy czym{" "}
+            <InlineMath math="N = n_1 + n_2 + \dots + n_k" />, to średnia (dla
+            danych pogrupowanych) jest:
+          </p>
+          <BlockMath math="\bar{x} = \frac{n_1 m_1 + n_2 m_2 + \cdots + n_k m_k}{N}" />
+          <p>a odchylenie standardowe:</p>
+          <BlockMath math="s = \sqrt{\frac{n_1(m_1 - \bar{x})^2 + n_2(m_2 - \bar{x})^2 + \cdots + n_k(m_k - \bar{x})^2}{N}}" />
+        </div>
+        <div className="mt-8">
+          <h3 className="text-2xl font-black my-2">3. Interpretacja dla danych empirycznych</h3>
+          <p>Odchylenie standardowe <InlineMath math="s" /> mówi, jak bardzo wyniki (empiryczne, z pomiaru) odbiegają od średniej:</p>
+          <ul className="list-disc list-inside w-full my-4">
+            <li>Jeśli <InlineMath math="s" /> jest małe, wyniki są blisko średniej (mały rozrzut).</li>
+            <li>Jeśli <InlineMath math="s" /> jest duże, wyniki są daleko od średniej (duży rozrzut).</li>
+          </ul>
+          <p>W praktyce:</p>
+          <ul className="list-disc list-inside w-full my-4">
+            <li>Wynik w przedziale <InlineMath math="\bar{x} \pm s" /> oznacza, że wynik jest blisko średniej (typowy).</li>
+            <li>Wynik poza przedziałem <InlineMath math="\bar{x} \pm 2s" /> oznacza, że wynik jest nietypowy (daleko od średniej).</li>
+          </ul>
+        </div>
+      </section>
+
+      <div className="w-4xl h-px bg-stone-500"></div>
+
+      <section className="w-4xl px-4">
+        <h2 className="font-aktura text-6xl mb-6 tracking-wide">
+          Rozdział <b className="font-normal tracking-tighter">V.</b> O skali Centylowej
+        </h2>
+        <p><b>Centyl</b> (p-ty centyl) jest to taka wartość, poniżej której leży p% uporządkowanych wyników.</p>
+        <div>
+          <p>Niech dane będą w porządku rosnącym:</p>
+          <BlockMath math="x_1 \leq x_2 \leq \cdots \leq x_n" />
+          <p>W praktyce szkolnej często bierze się pozycję:</p>
+          <BlockMath math="k = \frac{p}{100} \cdot (n + 1)" />
+          <p>a tedy p-ty centyl przyjmujem jako:</p>
+          <BlockMath math="C_p = x_k" />
+          <p>A jeśli chcesz ocenić, na którym centylu stoi dany wynik <InlineMath math="x" />, liczysz, ile wyników nie jest odeń większych:</p>
+          <BlockMath math="p = \frac{\text{liczba wyników} \leq x}{n} \cdot 100\%" />
+        </div>
+      </section>
+      
+      <div className="w-4xl h-px bg-stone-500"></div>
+
+      <section className="w-4xl px-4">
+        <h2 className="font-aktura text-6xl mb-6 tracking-wide">
+          Rozdział <b className="font-normal tracking-tighter">VI.</b> O schemacie Bernoulliego
+        </h2>
+        <p>
+          Gdy wykonujesz <InlineMath math="n" /> niezależnych prób, w każdej
+          sukces zachodzi z prawdopodobieństwem <InlineMath math="p" /> (a
+          porażka z <InlineMath math="1-p" />), tedy liczba sukcesów{" "}
+          <InlineMath math="X" /> ma rozkład Bernoulliego (dwumianowy), a:
+        </p>
+        <BlockMath math="P(X = k) = \binom{n}{k} p^k (1-p)^{n-k}" />
+        <p>gdzie <InlineMath math="\binom{n}{k} = \frac{n!}{k!(n-k)!}" /></p>
+      </section>
+
+      <div className="w-4xl h-px bg-stone-500"></div>
+
+      <section className="w-4xl px-4">
+        <h2 className="font-aktura text-6xl mb-6 tracking-wide">
+          Rozdział <b className="font-normal tracking-tighter">VII.</b> Praktyka
           uczniowska: pytania, któreć się przydadzą
         </h2>
         <p>Abyś nie błądził, pytaj zawsze:</p>
