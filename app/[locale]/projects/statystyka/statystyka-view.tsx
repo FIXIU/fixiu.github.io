@@ -232,14 +232,14 @@ export default function StatystykaView() {
         </div>
         <div className="mt-8">
           <h3 className="text-xl sm:text-2xl font-black my-2">
-            2. Wariancja i odchylenie standardowe{" "}
+            2. Odchylenie standardowe{" "}
             {/* WARIANCJA TODO: SPRAWDZIC CZY JEST TO W PODSTAWIE PROGRAMOWEJ */}
           </h3>
-          <p>
+          {/* <p>
             Wariancja mierzy, jako bardzo dane odbiegają od średniej, a
             odchylenie standardowe jest jej pierwiastkiem, przeto łatwiej je
             pojmować, bo ma tę samą „miarę” co dane.
-          </p>
+          </p> */}
           <p className="mt-4">
             Dla danych <InlineMath math="x_1, x_2, \dots, x_n" /> oraz średniej{" "}
             <InlineMath math="\bar{x}" />:
