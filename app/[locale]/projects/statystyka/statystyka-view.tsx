@@ -244,12 +244,12 @@ export default function StatystykaView() {
             Dla danych <InlineMath math="x_1, x_2, \dots, x_n" /> oraz średniej{" "}
             <InlineMath math="\bar{x}" />:
           </p>
-          <p className="mt-4">Wariancja:</p>
+          {/* <p className="mt-4">Wariancja:</p>
           <div className="flex flex-col md:flex-row w-full gap-4 items-center justify-center">
             <BlockMath math="s^2 = \frac{1}{n} \sum_{i=1}^{n} (x_i - \bar{x})^2" />
             <p>lub</p>
             <BlockMath math="s^2 = \frac{(x_1-\bar{x})^2 + \cdots + (x_n-\bar{x})^2}{n}" />
-          </div>
+          </div> */}
           <p className="mt-4">Odchylenie standardowe:</p>
           <BlockMath math="s = \sqrt{s^2}" />
           <div className="my-4 p-4 border border-[var(--stat-border)] rounded-lg bg-[var(--stat-card)]">
